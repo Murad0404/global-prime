@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
 import { db } from './firebase';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -42,14 +42,16 @@ function App() {
         const slidesData = slidesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setHeroSlides(slidesData);
 
-        // Fetch settings
-        const settingsDoc = await getDoc(doc(db, "settings", "general"));
-        if (settingsDoc.exists()) {
-          setSettings(settingsDoc.data());
-        } else {
-          // Initialize default settings if not exists
-          await setDoc(doc(db, "settings", "general"), settings);
-        }
+        // Fetch settings in real-time
+        const settingsRef = doc(db, "settings", "general");
+        const unsubscribeSettings = onSnapshot(settingsRef, (docSnap) => {
+          if (docSnap.exists()) {
+            setSettings(docSnap.data());
+          } else {
+            // Initialize default settings if not exists
+            setDoc(settingsRef, settings).catch(err => console.error(err));
+          }
+        });
       } catch (error) {
         console.error("Firebase'dan ma'lumotlarni yuklashda xatolik:", error);
       }
