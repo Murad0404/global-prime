@@ -10,7 +10,9 @@ const AdminRoute = ({
   heroSlides,
   onAddHeroSlide,
   onDeleteHeroSlide,
-  onUpdateHeroSlide
+  onUpdateHeroSlide,
+  settings,
+  onUpdateSettings
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,6 +49,8 @@ const AdminRoute = ({
       onAddHeroSlide={onAddHeroSlide}
       onDeleteHeroSlide={onDeleteHeroSlide}
       onUpdateHeroSlide={onUpdateHeroSlide}
+      settings={settings}
+      onUpdateSettings={onUpdateSettings}
     />
   );
 };
