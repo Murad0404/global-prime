@@ -47,8 +47,10 @@ export default async function handler(request, response) {
 
     // CRUD LOGIC (products or heroSlides)
     if (resource === 'products' || resource === 'heroSlides') {
+      const kvKey = `global_ptime_${resource}`;
+
       // Seed data if KV is empty
-      let dataList = await kv.get(resource);
+      let dataList = await kv.get(kvKey);
       
       if (!dataList) {
         try {
@@ -56,7 +58,7 @@ export default async function handler(request, response) {
           if (fs.existsSync(dbPath)) {
             const dbData = JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
             dataList = dbData[resource] || [];
-            await kv.set(resource, dataList);
+            await kv.set(kvKey, dataList);
           } else {
             dataList = [];
           }
@@ -82,7 +84,7 @@ export default async function handler(request, response) {
           newItem.id = String(Date.now());
         }
         dataList.push(newItem);
-        await kv.set(resource, dataList);
+        await kv.set(kvKey, dataList);
         return response.status(201).json(newItem);
       }
 
@@ -93,7 +95,7 @@ export default async function handler(request, response) {
         const index = dataList.findIndex(i => String(i.id) === String(id));
         if (index !== -1) {
           dataList[index] = { ...dataList[index], ...updatedItem, id: dataList[index].id }; 
-          await kv.set(resource, dataList);
+          await kv.set(kvKey, dataList);
           return response.status(200).json(dataList[index]);
         }
         return response.status(404).json({ error: 'Not found' });
@@ -103,7 +105,7 @@ export default async function handler(request, response) {
       if (request.method === 'DELETE') {
         if (!id) return response.status(400).json({ error: 'ID is required for DELETE' });
         const filteredList = dataList.filter(i => String(i.id) !== String(id));
-        await kv.set(resource, filteredList);
+        await kv.set(kvKey, filteredList);
         return response.status(200).json({});
       }
     }
