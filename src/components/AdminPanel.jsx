@@ -17,7 +17,11 @@ const AdminPanel = ({
   const [newCategory, setNewCategory] = useState('');
   const [editingProductId, setEditingProductId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(15);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  // New state for viewing images full size
+  const [viewImage, setViewImage] = useState(null);
+
   const [productFormData, setProductFormData] = useState({
     name: '', russianName: '', price: '', oldPrice: '', category: '',
     description: '', features: '', image1: '', image2: '',
@@ -420,7 +424,13 @@ const AdminPanel = ({
                       <tr key={product.id}>
                         <td>
                           {product.image1 ? (
-                            <img src={product.image1} alt={product.name} className="table-img" />
+                            <img 
+                              src={product.image1} 
+                              alt={product.name} 
+                              className="table-img" 
+                              style={{ cursor: 'pointer' }}
+                              onClick={() => setViewImage(product.image1)} 
+                            />
                           ) : (
                             <div className="table-img-placeholder">Rasmsiz</div>
                           )}
@@ -513,7 +523,13 @@ const AdminPanel = ({
                       <tr key={slide.id}>
                         <td>
                           {slide.image ? (
-                            <img src={slide.image} alt="Slide" className="table-img" style={{ width: '120px', height: 'auto', maxHeight: '80px' }} />
+                            <img 
+                              src={slide.image} 
+                              alt="Slide" 
+                              className="table-img" 
+                              style={{ width: '120px', height: 'auto', maxHeight: '80px', cursor: 'pointer' }} 
+                              onClick={() => setViewImage(slide.image)}
+                            />
                           ) : (
                             <div className="table-img-placeholder">Rasmsiz</div>
                           )}
@@ -537,6 +553,38 @@ const AdminPanel = ({
           </div>
         </div>
       )}
+
+      {/* --- IMAGE VIEW MODAL --- */}
+      {viewImage && (
+        <div 
+          style={{
+            position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+            backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 9999,
+            display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px'
+          }}
+          onClick={() => setViewImage(null)}
+        >
+          <div style={{ position: 'relative', maxWidth: '90%', maxHeight: '90%' }}>
+            <button 
+              onClick={() => setViewImage(null)}
+              style={{
+                position: 'absolute', top: '-40px', right: '0', 
+                background: 'none', border: 'none', color: 'white', 
+                fontSize: '30px', cursor: 'pointer'
+              }}
+            >
+              &times;
+            </button>
+            <img 
+              src={viewImage} 
+              alt="Full size preview" 
+              style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '8px' }} 
+              onClick={(e) => e.stopPropagation()} // Prevent clicking image from closing modal
+            />
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
