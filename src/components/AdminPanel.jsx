@@ -161,6 +161,27 @@ const AdminPanel = ({
   };
 
   // --- PRODUCT HANDLERS ---
+  const handleDeleteCategory = (catName) => {
+    const productsInCat = products.filter(p => p.category === catName);
+    
+    if (productsInCat.length > 0) {
+      const confirmDelete = window.confirm(`Bu kategoriya ${productsInCat.length} ta mahsulotga ulangan. Aniq o'chirishni xohlaysizmi? (Unga tegishli mahsulotlar ham o'chiriladi)`);
+      if (confirmDelete) {
+        productsInCat.forEach(p => {
+          onDeleteProduct(p.id);
+        });
+        setCustomCategories(prev => prev.filter(c => c !== catName));
+        showMessage('Kategoriya va unga tegishli mahsulotlar o\\'chirildi!');
+      }
+    } else {
+      const confirmDelete = window.confirm('Rostdan ham ushbu kategoriyani o\\'chirmoqchimisiz?');
+      if (confirmDelete) {
+        setCustomCategories(prev => prev.filter(c => c !== catName));
+        showMessage('Kategoriya o\\'chirildi!');
+      }
+    }
+  };
+
   const handleAddCategory = (e) => {
     e.preventDefault();
     if (newCategory.trim() && !allCategories.includes(newCategory.trim())) {
@@ -415,7 +436,17 @@ const AdminPanel = ({
                 <h4>Mavjud Kategoriyalar:</h4>
                 <div className="tags">
                   {allCategories.map((cat, idx) => (
-                    <span key={idx} className="tag">{cat}</span>
+                    <span key={idx} className="tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                      {cat}
+                      <button 
+                        type="button" 
+                        onClick={() => handleDeleteCategory(cat)}
+                        style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: 'bold', padding: '0 5px', fontSize: '1.2rem', lineHeight: '1' }}
+                        title="O'chirish"
+                      >
+                        &times;
+                      </button>
+                    </span>
                   ))}
                 </div>
               </div>
