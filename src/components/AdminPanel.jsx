@@ -72,16 +72,10 @@ const AdminPanel = ({
   const [isUploading, setIsUploading] = useState(false);
 
   const uploadToFirebase = async (base64, filename) => {
-    try {
-      const storageRef = ref(storage, `images/${filename}`);
-      await uploadString(storageRef, base64, 'data_url');
-      const downloadURL = await getDownloadURL(storageRef);
-      return downloadURL;
-    } catch (error) {
-      console.error("Firebase Storage xatoligi:", error);
-      showMessage('Rasm yuklashda xatolik yuz berdi!', 'error');
-      return null;
-    }
+    // Firebase Storage pullik tarif so'ragani uchun, rasmlarni to'g'ridan-to'g'ri
+    // siqilgan Base64 formatida Firestore ichida saqlaymiz.
+    // Bu mutlaqo bepul va tez ishlaydi.
+    return base64;
   };
 
   const handleImageUpload = (e, targetForm, fieldName) => {
