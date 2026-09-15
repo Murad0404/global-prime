@@ -3,7 +3,7 @@ import { Globe, Phone, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 
-const Header = () => {
+const Header = ({ settings }) => {
   const location = useLocation();
   const isHome = location.pathname === '/';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -11,6 +11,9 @@ const Header = () => {
   const toggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  const phone = settings?.phone || '+998 77 000 09 48';
+  const phoneLink = `tel:${phone.replace(/\s+/g, '')}`;
 
   return (
     <header className="header">
@@ -28,9 +31,9 @@ const Header = () => {
         )}
 
         <div className="contact-info desktop-only">
-          <a href="tel:+998770000948" className="contact-link">
+          <a href={phoneLink} className="contact-link">
             <Phone size={18} />
-            <span>+998 77 000 09 48</span>
+            <span>{phone}</span>
           </a>
         </div>
 
@@ -50,9 +53,9 @@ const Header = () => {
             </nav>
           )}
           <div className="mobile-contact">
-            <a href="tel:+998770000948" className="mobile-contact-link">
+            <a href={phoneLink} className="mobile-contact-link">
               <Phone size={18} />
-              <span>+998 77 000 09 48</span>
+              <span>{phone}</span>
             </a>
           </div>
         </div>

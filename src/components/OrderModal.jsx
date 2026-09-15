@@ -47,13 +47,16 @@ const OrderModal = ({ product, onClose }) => {
               <h4>{product.name}</h4>
               <p className="modal-price">${product.price}</p>
               
-              {(product.image1 || product.image2) && (
+              {(product.image1 || product.image2 || product.image3) && (
                 <div className="modal-images" style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
                   {product.image1 && (
                     <img src={product.image1} alt={product.name} style={{ flex: 1, width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px' }} />
                   )}
                   {product.image2 && (
                     <img src={product.image2} alt={`${product.name} 2`} style={{ flex: 1, width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px' }} />
+                  )}
+                  {product.image3 && (
+                    <img src={product.image3} alt={`${product.name} 3`} style={{ flex: 1, width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px' }} />
                   )}
                 </div>
               )}

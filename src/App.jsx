@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -8,12 +8,16 @@ import ProductCatalog from './components/ProductCatalog';
 import OrderModal from './components/OrderModal';
 import Footer from './components/Footer';
 import AdminRoute from './components/AdminRoute';
-import { products as initialProducts } from './data/products';
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [heroSlides, setHeroSlides] = useState([]);
+  const [settings, setSettings] = useState({
+    phone: '+998 90 123 45 67',
+    email: 'info@globalprime.uz',
+    address: 'Toshkent shahar, Chilonzor tumani'
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +31,15 @@ function App() {
         const slidesSnapshot = await getDocs(collection(db, "heroSlides"));
         const slidesData = slidesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setHeroSlides(slidesData);
+
+        // Fetch settings
+        const settingsDoc = await getDoc(doc(db, "settings", "general"));
+        if (settingsDoc.exists()) {
+          setSettings(settingsDoc.data());
+        } else {
+          // Initialize default settings if not exists
+          await setDoc(doc(db, "settings", "general"), settings);
+        }
       } catch (error) {
         console.error("Firebase'dan ma'lumotlarni yuklashda xatolik:", error);
       }
@@ -105,10 +118,20 @@ function App() {
     }
   };
 
+  // --- Settings Handlers ---
+  const handleUpdateSettings = async (newSettings) => {
+    try {
+      await setDoc(doc(db, "settings", "general"), newSettings);
+      setSettings(newSettings);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <Router>
       <div className="app-wrapper">
-        <Header />
+        <Header settings={settings} />
         <main>
           <Routes>
             <Route path="/" element={
@@ -127,11 +150,13 @@ function App() {
                 onAddHeroSlide={handleAddHeroSlide}
                 onDeleteHeroSlide={handleDeleteHeroSlide}
                 onUpdateHeroSlide={handleUpdateHeroSlide}
+                settings={settings}
+                onUpdateSettings={handleUpdateSettings}
               />
             } />
           </Routes>
         </main>
-        <Footer />
+        <Footer settings={settings} />
 
         {selectedProduct && (
           <OrderModal

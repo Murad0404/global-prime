@@ -5,10 +5,24 @@ import './AdminPanel.css';
 
 const AdminPanel = ({
   products, onAddProduct, onDeleteProduct, onUpdateProduct,
-  heroSlides, onAddHeroSlide, onDeleteHeroSlide, onUpdateHeroSlide
+  heroSlides, onAddHeroSlide, onDeleteHeroSlide, onUpdateHeroSlide,
+  settings, onUpdateSettings
 }) => {
-  const [activeTab, setActiveTab] = useState('products'); // 'products', 'hero'
+  const [activeTab, setActiveTab] = useState('products'); // 'products', 'hero', 'settings'
   const [message, setMessage] = useState('');
+
+  // --- SETTINGS STATE ---
+  const [settingsFormData, setSettingsFormData] = useState({
+    phone: settings?.phone || '+998 90 123 45 67',
+    email: settings?.email || 'info@globalprime.uz',
+    address: settings?.address || 'Toshkent shahar, Chilonzor tumani'
+  });
+
+  useEffect(() => {
+    if (settings) {
+      setSettingsFormData(settings);
+    }
+  }, [settings]);
 
   // --- PRODUCT STATE ---
   const existingCategories = [...new Set(products.map(p => p.category))].filter(Boolean);
@@ -24,7 +38,7 @@ const AdminPanel = ({
 
   const [productFormData, setProductFormData] = useState({
     name: '', russianName: '', price: '', oldPrice: '', category: '',
-    description: '', features: '', image1: '', image2: '',
+    description: '', features: '', image1: '', image2: '', image3: '',
     stockStatus: 'in_stock' // 'in_stock' or 'on_order'
   });
 
@@ -106,10 +120,10 @@ const AdminPanel = ({
   };
 
   const handleMultipleProductImageUpload = (e) => {
-    const files = Array.from(e.target.files).slice(0, 2); // maximum 2 files
+    const files = Array.from(e.target.files).slice(0, 3); // maximum 3 files
     if (files.length === 0) return;
 
-    setProductFormData(prev => ({ ...prev, image1: '', image2: '' }));
+    setProductFormData(prev => ({ ...prev, image1: '', image2: '', image3: '' }));
     setIsUploading(true);
 
     let uploadsCompleted = 0;
@@ -123,13 +137,25 @@ const AdminPanel = ({
       compressImage(file, 'product', async (compressedBase64) => {
         const url = await uploadToFirebase(compressedBase64, `${Date.now()}_${file.name}`);
         if (url) {
-          const fieldName = index === 0 ? 'image1' : 'image2';
+          const fieldName = index === 0 ? 'image1' : index === 1 ? 'image2' : 'image3';
           setProductFormData(prev => ({ ...prev, [fieldName]: url }));
         }
         uploadsCompleted++;
         if (uploadsCompleted === files.length) setIsUploading(false);
       });
     });
+  };
+
+  // --- SETTINGS HANDLERS ---
+  const handleSettingsChange = (e) => {
+    const { name, value } = e.target;
+    setSettingsFormData({ ...settingsFormData, [name]: value });
+  };
+
+  const handleSettingsSubmit = (e) => {
+    e.preventDefault();
+    onUpdateSettings(settingsFormData);
+    showMessage("Sozlamalar muvaffaqiyatli saqlandi!");
   };
 
   // --- PRODUCT HANDLERS ---
@@ -167,7 +193,8 @@ const AdminPanel = ({
       description: productFormData.description,
       features: productFormData.features.split('\n').filter(f => f.trim() !== ''),
       image1: productFormData.image1,
-      image2: productFormData.image2
+      image2: productFormData.image2,
+      image3: productFormData.image3
     };
 
     if (editingProductId) {
@@ -184,7 +211,7 @@ const AdminPanel = ({
     setEditingProductId(null);
     setProductFormData({
       name: '', russianName: '', price: '', oldPrice: '', category: '',
-      description: '', features: '', image1: '', image2: '',
+      description: '', features: '', image1: '', image2: '', image3: '',
       stockStatus: 'in_stock'
     });
     const fileInputs = document.querySelectorAll('#product-form input[type="file"]');
@@ -203,7 +230,8 @@ const AdminPanel = ({
       description: product.description || '',
       features: (product.features || []).join('\n'),
       image1: product.image1 || '',
-      image2: product.image2 || ''
+      image2: product.image2 || '',
+      image3: product.image3 || ''
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -277,11 +305,67 @@ const AdminPanel = ({
         >
           Reklamalar
         </button>
+        <button
+          className={`tab-btn ${activeTab === 'settings' ? 'active' : ''}`}
+          onClick={() => setActiveTab('settings')}
+        >
+          Sozlamalar
+        </button>
       </div>
 
       {message && (
         <div className={`alert alert-${message.type}`}>
           {message.text}
+        </div>
+      )}
+
+      {/* --- SETTINGS TAB --- */}
+      {activeTab === 'settings' && (
+        <div className="admin-grid" style={{ gridTemplateColumns: '1fr' }}>
+          <div className="admin-card">
+            <h3>Sayt Sozlamalari (Aloqa ma'lumotlari)</h3>
+            <p style={{ marginBottom: '15px', color: '#6b7280', fontSize: '0.9rem' }}>
+              Bu yerdagi ma'lumotlar saytning eng tepasi (Header) va eng pastida (Footer) mijozlarga ko'rinadi.
+            </p>
+            <form onSubmit={handleSettingsSubmit} className="admin-form">
+              <div className="form-group">
+                <label>Telefon raqam *</label>
+                <input 
+                  type="text" 
+                  name="phone" 
+                  value={settingsFormData.phone} 
+                  onChange={handleSettingsChange} 
+                  required 
+                  placeholder="+998 90 123 45 67" 
+                />
+              </div>
+              <div className="form-group">
+                <label>Email manzil</label>
+                <input 
+                  type="email" 
+                  name="email" 
+                  value={settingsFormData.email} 
+                  onChange={handleSettingsChange} 
+                  placeholder="info@globalprime.uz" 
+                />
+              </div>
+              <div className="form-group">
+                <label>Manzil (Adres)</label>
+                <input 
+                  type="text" 
+                  name="address" 
+                  value={settingsFormData.address} 
+                  onChange={handleSettingsChange} 
+                  placeholder="Toshkent shahar, Chilonzor tumani..." 
+                />
+              </div>
+              <div className="form-actions" style={{ marginTop: '15px' }}>
+                <button type="submit" className="btn-primary" style={{ width: '200px' }}>
+                  Saqlash
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
 
@@ -355,16 +439,17 @@ const AdminPanel = ({
                 </div>
 
                 <div className="form-group">
-                  <label>Rasmlar (maksimal 2 ta rasm yuklash mumkin)</label>
+                  <label>Rasmlar (maksimal 3 ta rasm yuklash mumkin)</label>
                   <input
                     type="file"
                     accept="image/*"
                     multiple
                     onChange={handleMultipleProductImageUpload}
                   />
-                  <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                  <div style={{ display: 'flex', gap: '10px', marginTop: '10px', flexWrap: 'wrap' }}>
                     {productFormData.image1 && <div className="img-preview"><img src={productFormData.image1} alt="Preview 1" /></div>}
                     {productFormData.image2 && <div className="img-preview"><img src={productFormData.image2} alt="Preview 2" /></div>}
+                    {productFormData.image3 && <div className="img-preview"><img src={productFormData.image3} alt="Preview 3" /></div>}
                   </div>
                 </div>
 
