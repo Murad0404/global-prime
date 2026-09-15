@@ -9,6 +9,10 @@ const OrderModal = ({ product, onClose }) => {
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [lightboxImage, setLightboxImage] = useState(null);
+
+  const images = [product?.image1, product?.image2, product?.image3].filter(Boolean);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -48,15 +52,38 @@ const OrderModal = ({ product, onClose }) => {
               <p className="modal-price">${product.price}</p>
               
               {(product.image1 || product.image2 || product.image3) && (
-                <div className="modal-images" style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
-                  {product.image1 && (
-                    <img src={product.image1} alt={product.name} style={{ flex: 1, width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px' }} />
-                  )}
-                  {product.image2 && (
-                    <img src={product.image2} alt={`${product.name} 2`} style={{ flex: 1, width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px' }} />
-                  )}
-                  {product.image3 && (
-                    <img src={product.image3} alt={`${product.name} 3`} style={{ flex: 1, width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px' }} />
+                <div className="modal-images-slider">
+                  <div 
+                    className="main-image-container" 
+                    style={{ cursor: 'pointer', position: 'relative', marginBottom: '10px' }}
+                    onClick={() => setLightboxImage(images[currentImageIndex])}
+                  >
+                    <img 
+                      src={images[currentImageIndex]} 
+                      alt={product.name} 
+                      style={{ width: '100%', height: '300px', objectFit: 'contain', borderRadius: '8px', backgroundColor: '#f3f4f6' }} 
+                    />
+                    <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(0,0,0,0.6)', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '12px' }}>
+                      Kattalashtirish
+                    </div>
+                  </div>
+                  
+                  {images.length > 1 && (
+                    <div className="thumbnails" style={{ display: 'flex', gap: '10px', overflowX: 'auto' }}>
+                      {images.map((img, idx) => (
+                        <img 
+                          key={idx}
+                          src={img} 
+                          alt={`Thumbnail ${idx + 1}`} 
+                          onClick={() => setCurrentImageIndex(idx)}
+                          style={{ 
+                            width: '80px', height: '80px', objectFit: 'cover', borderRadius: '6px', cursor: 'pointer',
+                            border: currentImageIndex === idx ? '2px solid var(--primary-color)' : '2px solid transparent',
+                            opacity: currentImageIndex === idx ? 1 : 0.6
+                          }} 
+                        />
+                      ))}
+                    </div>
                   )}
                 </div>
               )}
@@ -108,6 +135,40 @@ const OrderModal = ({ product, onClose }) => {
           </>
         )}
       </div>
+
+      {/* --- IMAGE VIEW LIGHTBOX MODAL --- */}
+      {lightboxImage && (
+        <div 
+          style={{
+            position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+            backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 100000,
+            display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px'
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            setLightboxImage(null);
+          }}
+        >
+          <div style={{ position: 'relative', maxWidth: '90%', maxHeight: '90%' }}>
+            <button 
+              onClick={(e) => { e.stopPropagation(); setLightboxImage(null); }}
+              style={{
+                position: 'absolute', top: '-40px', right: '0', 
+                background: 'none', border: 'none', color: 'white', 
+                fontSize: '35px', cursor: 'pointer'
+              }}
+            >
+              &times;
+            </button>
+            <img 
+              src={lightboxImage} 
+              alt="Kattalashtirilgan rasm" 
+              style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '8px' }} 
+              onClick={(e) => e.stopPropagation()} 
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

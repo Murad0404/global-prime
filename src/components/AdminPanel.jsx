@@ -514,7 +514,7 @@ const AdminPanel = ({
                               alt={product.name} 
                               className="table-img" 
                               style={{ cursor: 'pointer' }}
-                              onClick={() => setViewImage(product.image1)} 
+                              onClick={() => setViewImage({ images: [product.image1, product.image2, product.image3].filter(Boolean), index: 0 })} 
                             />
                           ) : (
                             <div className="table-img-placeholder">Rasmsiz</div>
@@ -613,7 +613,7 @@ const AdminPanel = ({
                               alt="Slide" 
                               className="table-img" 
                               style={{ width: '120px', height: 'auto', maxHeight: '80px', cursor: 'pointer' }} 
-                              onClick={() => setViewImage(slide.image)}
+                              onClick={() => setViewImage({ images: [slide.image], index: 0 })}
                             />
                           ) : (
                             <div className="table-img-placeholder">Rasmsiz</div>
@@ -644,29 +644,81 @@ const AdminPanel = ({
         <div 
           style={{
             position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-            backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 9999,
+            backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 9999,
             display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px'
           }}
           onClick={() => setViewImage(null)}
         >
-          <div style={{ position: 'relative', maxWidth: '90%', maxHeight: '90%' }}>
+          <div style={{ position: 'relative', maxWidth: '90%', maxHeight: '90%', display: 'flex', alignItems: 'center' }}>
             <button 
-              onClick={() => setViewImage(null)}
+              onClick={(e) => { e.stopPropagation(); setViewImage(null); }}
               style={{
                 position: 'absolute', top: '-40px', right: '0', 
                 background: 'none', border: 'none', color: 'white', 
-                fontSize: '30px', cursor: 'pointer'
+                fontSize: '35px', cursor: 'pointer', zIndex: 10
               }}
             >
               &times;
             </button>
+
+            {viewImage.images.length > 1 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setViewImage({ ...viewImage, index: viewImage.index === 0 ? viewImage.images.length - 1 : viewImage.index - 1 });
+                }}
+                style={{
+                  position: 'absolute', left: '-50px',
+                  background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white',
+                  fontSize: '40px', cursor: 'pointer', padding: '10px 15px', borderRadius: '50%',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10
+                }}
+              >
+                &lsaquo;
+              </button>
+            )}
+
             <img 
-              src={viewImage} 
+              src={viewImage.images[viewImage.index]} 
               alt="Full size preview" 
               style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '8px' }} 
               onClick={(e) => e.stopPropagation()} // Prevent clicking image from closing modal
             />
+
+            {viewImage.images.length > 1 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setViewImage({ ...viewImage, index: viewImage.index === viewImage.images.length - 1 ? 0 : viewImage.index + 1 });
+                }}
+                style={{
+                  position: 'absolute', right: '-50px',
+                  background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white',
+                  fontSize: '40px', cursor: 'pointer', padding: '10px 15px', borderRadius: '50%',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10
+                }}
+              >
+                &rsaquo;
+              </button>
+            )}
           </div>
+          
+          {/* Thumbnails Indicator */}
+          {viewImage.images.length > 1 && (
+            <div style={{ position: 'absolute', bottom: '20px', display: 'flex', gap: '8px' }}>
+              {viewImage.images.map((_, idx) => (
+                <div 
+                  key={idx}
+                  style={{
+                    width: '10px', height: '10px', borderRadius: '50%',
+                    backgroundColor: viewImage.index === idx ? 'white' : 'rgba(255,255,255,0.4)',
+                    cursor: 'pointer'
+                  }}
+                  onClick={(e) => { e.stopPropagation(); setViewImage({ ...viewImage, index: idx }); }}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
 
