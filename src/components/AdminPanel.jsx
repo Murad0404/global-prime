@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './AdminPanel.css';
 
-const AdminPanel = ({ 
+const AdminPanel = ({
   products, onAddProduct, onDeleteProduct, onUpdateProduct,
   heroSlides, onAddHeroSlide, onDeleteHeroSlide, onUpdateHeroSlide
 }) => {
@@ -17,7 +17,7 @@ const AdminPanel = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const [productFormData, setProductFormData] = useState({
-    name: '', russianName: '', price: '', oldPrice: '', category: '', 
+    name: '', russianName: '', price: '', oldPrice: '', category: '',
     description: '', features: '', image1: '', image2: '',
     stockStatus: 'in_stock' // 'in_stock' or 'on_order'
   });
@@ -67,6 +67,24 @@ const AdminPanel = ({
     };
   };
 
+  const [isUploading, setIsUploading] = useState(false);
+
+  const uploadToBlob = async (base64, filename) => {
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename, base64 })
+      });
+      const data = await res.json();
+      return data.url;
+    } catch (e) {
+      console.error(e);
+      showMessage('Rasm yuklashda xatolik yuz berdi!', 'error');
+      return null;
+    }
+  };
+
   const handleImageUpload = (e, targetForm, fieldName) => {
     const file = e.target.files[0];
     if (file) {
@@ -75,12 +93,17 @@ const AdminPanel = ({
         e.target.value = '';
         return;
       }
-      compressImage(file, targetForm, (compressedBase64) => {
-        if (targetForm === 'product') {
-          setProductFormData(prev => ({ ...prev, [fieldName]: compressedBase64 }));
-        } else if (targetForm === 'hero') {
-          setSlideFormData(prev => ({ ...prev, [fieldName]: compressedBase64 }));
+      setIsUploading(true);
+      compressImage(file, targetForm, async (compressedBase64) => {
+        const url = await uploadToBlob(compressedBase64, `${Date.now()}_${file.name}`);
+        if (url) {
+          if (targetForm === 'product') {
+            setProductFormData(prev => ({ ...prev, [fieldName]: url }));
+          } else if (targetForm === 'hero') {
+            setSlideFormData(prev => ({ ...prev, [fieldName]: url }));
+          }
         }
+        setIsUploading(false);
       });
     }
   };
@@ -90,15 +113,24 @@ const AdminPanel = ({
     if (files.length === 0) return;
 
     setProductFormData(prev => ({ ...prev, image1: '', image2: '' }));
+    setIsUploading(true);
 
+    let uploadsCompleted = 0;
     files.forEach((file, index) => {
       if (file.size > 5 * 1024 * 1024) {
         showMessage('Fayl hajmi 5MB dan kichik bo\'lishi kerak!', 'error');
+        uploadsCompleted++;
+        if (uploadsCompleted === files.length) setIsUploading(false);
         return;
       }
-      compressImage(file, 'product', (compressedBase64) => {
-        const fieldName = index === 0 ? 'image1' : 'image2';
-        setProductFormData(prev => ({ ...prev, [fieldName]: compressedBase64 }));
+      compressImage(file, 'product', async (compressedBase64) => {
+        const url = await uploadToBlob(compressedBase64, `${Date.now()}_${file.name}`);
+        if (url) {
+          const fieldName = index === 0 ? 'image1' : 'image2';
+          setProductFormData(prev => ({ ...prev, [fieldName]: url }));
+        }
+        uploadsCompleted++;
+        if (uploadsCompleted === files.length) setIsUploading(false);
       });
     });
   };
@@ -154,7 +186,7 @@ const AdminPanel = ({
   const resetProductForm = () => {
     setEditingProductId(null);
     setProductFormData({
-      name: '', russianName: '', price: '', oldPrice: '', category: '', 
+      name: '', russianName: '', price: '', oldPrice: '', category: '',
       description: '', features: '', image1: '', image2: '',
       stockStatus: 'in_stock'
     });
@@ -236,13 +268,13 @@ const AdminPanel = ({
       </div>
 
       <div className="admin-tabs">
-        <button 
+        <button
           className={`tab-btn ${activeTab === 'products' ? 'active' : ''}`}
           onClick={() => setActiveTab('products')}
         >
           Mahsulotlar
         </button>
-        <button 
+        <button
           className={`tab-btn ${activeTab === 'hero' ? 'active' : ''}`}
           onClick={() => setActiveTab('hero')}
         >
@@ -294,7 +326,7 @@ const AdminPanel = ({
                     <input type="text" name="russianName" value={productFormData.russianName} onChange={handleProductChange} />
                   </div>
                 </div>
-                
+
                 <div className="form-row">
                   <div className="form-group half">
                     <label>Sotuv narxi ($) *</label>
@@ -324,14 +356,14 @@ const AdminPanel = ({
                     </select>
                   </div>
                 </div>
-                
+
                 <div className="form-group">
                   <label>Rasmlar (maksimal 2 ta rasm yuklash mumkin)</label>
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    multiple 
-                    onChange={handleMultipleProductImageUpload} 
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleMultipleProductImageUpload}
                   />
                   <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                     {productFormData.image1 && <div className="img-preview"><img src={productFormData.image1} alt="Preview 1" /></div>}
@@ -350,8 +382,8 @@ const AdminPanel = ({
                 </div>
 
                 <div className="form-actions" style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
-                  <button type="submit" className="btn-primary" style={{ flex: 1 }}>
-                    {editingProductId ? 'O\'zgarishlarni Saqlash' : 'Mahsulotni Saqlash'}
+                  <button type="submit" className="btn-primary" style={{ flex: 1 }} disabled={isUploading}>
+                    {isUploading ? 'Rasm yuklanmoqda...' : (editingProductId ? 'O\'zgarishlarni Saqlash' : 'Mahsulotni Saqlash')}
                   </button>
                   {editingProductId && (
                     <button type="button" className="btn-secondary" onClick={resetProductForm} style={{ flex: 1 }}>
@@ -362,7 +394,7 @@ const AdminPanel = ({
               </form>
             </div>
           </div>
-          
+
           <div className="admin-card product-list-card mt-4" style={{ marginTop: '30px' }}>
             <div className="table-header-flex">
               <h3>Barcha Mahsulotlar ({products.length} ta)</h3>
@@ -377,7 +409,7 @@ const AdminPanel = ({
                 </select>
               </div>
             </div>
-            
+
             <div className="table-responsive">
               <table className="admin-table">
                 <thead>
@@ -407,8 +439,8 @@ const AdminPanel = ({
                           <div className="action-buttons">
                             <button className="btn-edit" onClick={() => handleEditProduct(product)}>Tahrirlash</button>
                             <button className="btn-delete" onClick={() => {
-                                if(window.confirm('Rostdan ham ushbu mahsulotni o\'chirmoqchimisiz?')) onDeleteProduct(product.id);
-                              }}>O'chirish</button>
+                              if (window.confirm('Rostdan ham ushbu mahsulotni o\'chirmoqchimisiz?')) onDeleteProduct(product.id);
+                            }}>O'chirish</button>
                           </div>
                         </td>
                       </tr>
@@ -419,7 +451,7 @@ const AdminPanel = ({
                 </tbody>
               </table>
             </div>
-            
+
             {totalPages > 1 && (
               <div className="pagination">
                 <button className="page-btn" onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>&laquo; Oldingi</button>
@@ -440,14 +472,14 @@ const AdminPanel = ({
         <div className="admin-grid" style={{ gridTemplateColumns: '1fr' }}>
           <div className="admin-card" id="hero-form">
             <h3>{editingSlideId ? 'Reklamani Tahrirlash' : 'Yangi Reklama Qo\'shish'}</h3>
-            <p style={{marginBottom: '15px', color: '#6b7280', fontSize: '0.9rem'}}>Asosiy sahifadagi 4 burchakli slayderga rasm va matn yuklash.</p>
+            <p style={{ marginBottom: '15px', color: '#6b7280', fontSize: '0.9rem' }}>Asosiy sahifadagi 4 burchakli slayderga rasm va matn yuklash.</p>
             <form onSubmit={handleSlideSubmit} className="admin-form">
               <div className="form-group">
                 <label>Reklama rasmi (1350x1080 tavsiya etiladi) *</label>
                 <div className="file-upload-wrapper">
-                  <input 
-                    type="file" 
-                    accept="image/*" 
+                  <input
+                    type="file"
+                    accept="image/*"
                     onChange={(e) => handleImageUpload(e, 'hero', 'image')}
                     className="file-input"
                   />
@@ -460,8 +492,8 @@ const AdminPanel = ({
               </div>
 
               <div className="form-actions" style={{ marginTop: '15px' }}>
-                <button type="submit" className="btn-primary" style={{ width: '100%' }}>
-                  {editingSlideId ? 'O\'zgarishlarni Saqlash' : 'Reklamani Qo\'shish'}
+                <button type="submit" className="btn-primary" style={{ width: '100%' }} disabled={isUploading}>
+                  {isUploading ? 'Rasm yuklanmoqda...' : (editingSlideId ? 'O\'zgarishlarni Saqlash' : 'Reklamani Qo\'shish')}
                 </button>
                 {editingSlideId && (
                   <button type="button" className="btn-secondary" onClick={resetSlideForm} style={{ width: '100%', marginTop: '10px' }}>
@@ -488,7 +520,7 @@ const AdminPanel = ({
                       <tr key={slide.id}>
                         <td>
                           {slide.image ? (
-                            <img src={slide.image} alt="Slide" className="table-img" style={{width: '120px', height: 'auto', maxHeight: '80px'}} />
+                            <img src={slide.image} alt="Slide" className="table-img" style={{ width: '120px', height: 'auto', maxHeight: '80px' }} />
                           ) : (
                             <div className="table-img-placeholder">Rasmsiz</div>
                           )}
@@ -497,8 +529,8 @@ const AdminPanel = ({
                           <div className="action-buttons">
                             <button className="btn-edit" onClick={() => handleEditSlide(slide)}>Tahrirlash</button>
                             <button className="btn-delete" onClick={() => {
-                                if(window.confirm('Rostdan ham ushbu slaydni o\'chirmoqchimisiz?')) onDeleteHeroSlide(slide.id);
-                              }}>O'chirish</button>
+                              if (window.confirm('Rostdan ham ushbu slaydni o\'chirmoqchimisiz?')) onDeleteHeroSlide(slide.id);
+                            }}>O'chirish</button>
                           </div>
                         </td>
                       </tr>

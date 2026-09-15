@@ -18,8 +18,8 @@
 }
 
 .hero-title {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  margin-bottom: 1.25rem;
 }
 
 .hero-title .highlight {
@@ -29,7 +29,7 @@
 }
 
 .hero-description {
-  font-size: 1.125rem;
+  font-size: 1rem;
   color: var(--color-text-light);
   margin-bottom: 2rem;
   max-width: 600px;

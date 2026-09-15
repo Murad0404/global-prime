@@ -12,7 +12,7 @@ const ProductCatalog = ({ products = [], onOrderProduct }) => {
   // Filter products
   const filteredProducts = products.filter(p => {
     const matchCategory = activeCategory === 'Barchasi' || p.category === activeCategory;
-    
+
     // Smart search logic like YouTube
     const searchTerms = searchQuery.toLowerCase().split(/\s+/).filter(t => t.length > 0);
     const searchableText = `
@@ -22,9 +22,9 @@ const ProductCatalog = ({ products = [], onOrderProduct }) => {
       ${p.description || ''} 
       ${(p.features || []).join(' ')}
     `.toLowerCase();
-    
+
     const matchSearch = searchTerms.length === 0 || searchTerms.every(term => searchableText.includes(term));
-    
+
     return matchCategory && matchSearch;
   });
 
@@ -40,10 +40,10 @@ const ProductCatalog = ({ products = [], onOrderProduct }) => {
         </div>
 
         <div className="search-bar-container">
-          <input 
-            type="text" 
-            className="search-input" 
-            placeholder="Mahsulot yoki kategoriya nomi orqali qidirish..." 
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Mahsulot yoki kategoriya nomi orqali qidirish..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -51,7 +51,7 @@ const ProductCatalog = ({ products = [], onOrderProduct }) => {
 
         <div className="category-filters">
           {categories.map((category) => (
-            <button 
+            <button
               key={category}
               className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
               onClick={() => setActiveCategory(category)}
@@ -63,19 +63,19 @@ const ProductCatalog = ({ products = [], onOrderProduct }) => {
 
         <div className="product-grid">
           {filteredProducts.map((product, index) => (
-            <div 
-              key={product.id} 
+            <div
+              key={product.id}
               className="animate-fade-in"
               style={{ animationDelay: `${(index % 4) * 100}ms` }}
             >
-              <ProductCard 
-                product={product} 
+              <ProductCard
+                product={product}
                 onOrder={onOrderProduct}
               />
             </div>
           ))}
         </div>
-        
+
         {filteredProducts.length === 0 && (
           <div className="empty-state">
             <p>Bu toifada mahsulot topilmadi.</p>

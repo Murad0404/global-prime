@@ -12,7 +12,7 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [heroSlides, setHeroSlides] = useState([]);
-  
+
   useEffect(() => {
     // Fetch products from JSON Server
     fetch(`/api/products`)
@@ -125,9 +125,9 @@ function App() {
               </>
             } />
             <Route path="/admin" element={
-              <AdminRoute 
-                products={products} 
-                onAddProduct={handleAddProduct} 
+              <AdminRoute
+                products={products}
+                onAddProduct={handleAddProduct}
                 onDeleteProduct={handleDeleteProduct}
                 onUpdateProduct={handleUpdateProduct}
                 heroSlides={heroSlides}
@@ -139,11 +139,11 @@ function App() {
           </Routes>
         </main>
         <Footer />
-        
+
         {selectedProduct && (
-          <OrderModal 
-            product={selectedProduct} 
-            onClose={handleCloseModal} 
+          <OrderModal
+            product={selectedProduct}
+            onClose={handleCloseModal}
           />
         )}
       </div>

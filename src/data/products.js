@@ -1,317 +1,503 @@
 export const products = [
   {
-    id: 1,
-    name: 'Qo\'lda yopish uskunasi',
-    russianName: 'РУЧНОЙ УКУПОРОЧНЫЙ СТАНОК',
-    price: 130,
-    category: 'Qadoqlash',
-    description: 'Har xil o\'lchamdagi qopqoqlarni qo\'lda yopish uchun mo\'ljallangan uskuna.',
-    features: [
-      'Qopqoq o\'lchami: S: 45mm, M: 65mm',
-      'Kauchuk bosh: 10-20mm, 20-30mm, 30-40mm, 40-50mm'
-    ]
+    "id": "1",
+    "name": "Qo'lda yopish uskunasi",
+    "russianName": "РУЧНОЙ УКУПОРОЧНЫЙ СТАНОК",
+    "price": 100,
+    "oldPrice": 130,
+    "stockStatus": "in_stock",
+    "badge": "BESTSELLER",
+    "category": "Qadoqlash",
+    "description": "Har xil o'lchamdagi qopqoqlarni qo'lda tez va qulay yopish uchun mo'ljallangan ushbu uskuna ishlab chiqarish samaradorligini sezilarli darajada oshiradi.",
+    "features": [
+      "Qopqoq o'lchami: S: 45mm, M: 65mm",
+      "Kauchuk boshlar: 10-20mm, 20-30mm, 30-40mm, 40-50mm",
+      "Ergonomik qulay tutqich va prujinali muvozanatlash",
+      "Quvvat: 220V tarmoqdan quvvatlanadi",
+      "Kafolat: 12 oy rasmiy servis kafolati"
+    ],
+    "image1": "/products/capping_machine.png",
+    "image2": "/products/capping_machine_studio.jpg",
+    "image": "/products/capping_machine.png"
   },
   {
-    id: 2,
-    name: 'Suyuqlik quyish uskunasi 280-4 CNC',
-    russianName: '280-4 Дозатор жидкости с ЧПУ',
-    price: 500,
-    category: 'Quyish',
-    description: 'Suyuqliklarni aniq o\'lchamda quyish uchun avtomatlashtirilgan uskuna.',
-    features: [
-      'Model: HZK-160',
-      'Kuchlanish va quvvat: 220V, 30W',
-      'Quyish hajmi: 5–3500 ml',
-      'Maksimal tezlik: 3.2 L/min',
-      'Aniqlik: <0.5%',
-      'Maksimal so\'rish masofasi: 2 m'
-    ]
+    "id": "2",
+    "name": "Suyuqlik quyish uskunasi 280-4 CNC",
+    "russianName": "280-4 Дозатор жидкости с ЧПУ",
+    "price": 500,
+    "oldPrice": 560,
+    "stockStatus": "in_stock",
+    "badge": "YANGI MAHSULOT",
+    "category": "Quyish",
+    "description": "Suyuqliklarni yuqori aniqlikda va bir vaqtning o'zida 4 ta idishga quyish uchun mo'ljallangan avtomatlashtirilgan CNC boshqaruvli dozer.",
+    "features": [
+      "Model: HZK-160 / 280-4 CNC",
+      "Kuchlanish va quvvat: 220V, 30W",
+      "Quyish hajmi: 5–3500 ml",
+      "Maksimal tezlik: 3.2 L/min (har bir nayzaga)",
+      "Aniqlik: <0.5%",
+      "Maksimal so'rish masofasi: 2 m",
+      "Raqamli klaviatura va LCD displey"
+    ],
+    "image1": "/products/liquid_filler_280_4.png",
+    "image2": "/products/liquid_filler_studio.jpg",
+    "image": "/products/liquid_filler_280_4.png"
   },
   {
-    id: 3,
-    name: 'Qo\'lda suyuqlik quyish uskunasi A03-D',
-    russianName: 'A03-D Ручной дозатор',
-    price: 210,
-    category: 'Quyish',
-    description: 'Kichik hajmdagi suyuqliklar va pastalarni quyish uchun qo\'lda ishqariladigan uskuna.',
-    features: [
-      'Quyish oralig\'i: 10–100 ml',
-      'Bunker hajmi: 9 L',
-      'Uskuna o\'lchami: 280x280x650 mm',
-      'Uskuna og\'irligi: 7.5 kg',
-      'Nayza chiqish diametri: 4.8 mm',
-      'Qo\'llaniladigan materiallar: suyuqlik, pastasimon',
-      'Quyish hajmini o\'zgartirish: sozlash gaykasi yordamida'
-    ]
+    "id": "3",
+    "name": "Qo'lda suyuqlik quyish uskunasi A03-D",
+    "russianName": "A03-D Ручной дозатор",
+    "price": 210,
+    "oldPrice": 240,
+    "stockStatus": "in_stock",
+    "badge": "ARZON NARX KAFOLATI",
+    "category": "Quyish",
+    "description": "Kichik va o'rta bizneslar uchun suyuqliklar, krem, malham, shampun va pastalarni aniq dozalash uchun qulay mexanik porshenli uskuna.",
+    "features": [
+      "Quyish oralig'i: 10–100 ml",
+      "Zanglamas po'latdan bunker hajmi: 9 L",
+      "Uskuna o'lchami: 280×280×650 mm",
+      "Uskuna og'irligi: 7.5 kg",
+      "Nayza chiqish diametri: 4.8 mm",
+      "Qo'llaniladigan materiallar: suyuqlik, pastasimon mahsulotlar",
+      "Quyish hajmini sozlash gaykasi yordamida oson o'zgartirish"
+    ],
+    "image1": "/products/manual_filler_a03.png",
+    "image2": "/products/manual_filler_studio.jpg",
+    "image": "/products/manual_filler_a03.png"
   },
   {
-    id: 4,
-    name: 'Konveyerli raqamli suyuqlik quyish uskunasi LSX-6000',
-    russianName: 'LSX-6000 Цифровой жидкостный дозатор с конвейером',
-    price: 320,
-    category: 'Quyish',
-    description: 'Konveyer tizimi bilan birga ishlaydigan aniq suyuqlik quyish uskunasi.',
-    features: [
-      'Kuchlanish va quvvat: 110–220V, 50/60Hz, 100W',
-      'Maksimal sarf: 3.2 L/min',
-      'Quyish oralig\'i: 5–4000 ml',
-      'Optimal oraliq: 5–2000 ml',
-      'Quyish aniqligi: ±0.5%',
-      'Boshqarish usuli: qo\'lda va avtomatik',
-      'O\'lchamlari: 235×135×125 mm',
-      'Og\'irligi: 5.7 kg'
-    ]
+    "id": "4",
+    "name": "Konveyerli raqamli suyuqlik quyish uskunasi LSX-6000",
+    "russianName": "LSX-6000 Цифровой жидкостный дозатор с конвейером",
+    "price": 320,
+    "oldPrice": 370,
+    "stockStatus": "in_stock",
+    "badge": "BESTSELLER",
+    "category": "Quyish",
+    "description": "Konveyer lentalik tizim va optik datchik bilan jihozlangan aqlli suyuqlik quyish uskunasi. Butilka kelganda avtomatik to'xtab quyadi.",
+    "features": [
+      "Kuchlanish va quvvat: 110–220V, 50/60Hz, 100W",
+      "Maksimal sarf: 3.2 L/min",
+      "Quyish oralig'i: 5–4000 ml (Optimal: 5–2000 ml)",
+      "Quyish aniqligi: ±0.5%",
+      "Boshqarish usuli: optik sensorli avtomatik va qo'lda",
+      "O'lchamlari: 235×135×125 mm, Og'irligi: 5.7 kg"
+    ],
+    "image1": "/products/conveyor_filler_lsx6000.png",
+    "image2": "",
+    "image": "/products/conveyor_filler_lsx6000.png"
   },
   {
-    id: 5,
-    name: 'Bir boshli diafragmali nasosli quyish uskunasi GFK-180',
-    russianName: 'GFK-180 Одноголовочный дозатор с диафрагменным насосом',
-    price: 220,
-    category: 'Quyish',
-    description: 'Diafragmali nasos yordamida suyuqlik quyish uskunasi.',
-    features: [
-      'Kuchlanish va quvvat: 110–220V, 50/60Hz, 40W',
-      'Maksimal sarf: 3500 ml/min',
-      'Nasos turi: diafragmali',
-      'Optimal oraliq: 5–1000 ml',
-      'Aniqlik: ±2%',
-      'Boshqarish: qo\'lda, avtomatik',
-      'O\'lchamlari: 360×255×170 mm'
-    ]
+    "id": "5",
+    "name": "Bir boshli diafragmali nasosli quyish uskunasi GFK-180",
+    "russianName": "GFK-180 Одноголовочный дозатор с диафрагменным насосом",
+    "price": 220,
+    "oldPrice": 250,
+    "stockStatus": "in_stock",
+    "badge": "ARZON NARX KAFOLATI",
+    "category": "Quyish",
+    "description": "Elektron mikrokontroller bilan boshqariladigan mustahkam diafragmali nasosli stol usti suyuqlik quyish uskunasi.",
+    "features": [
+      "Kuchlanish va quvvat: 110–220V, 50/60Hz, 40W",
+      "Maksimal sarf: 3500 ml/min",
+      "Nasos turi: korroziyaga chidamli diafragmali",
+      "Optimal oraliq: 5–1000 ml",
+      "Aniqlik: ±2%",
+      "Boshqarish: raqamli taymerli, pedal yoki avtomatik tsikl"
+    ],
+    "image1": "/products/pump_filler_gfk180.png",
+    "image2": "",
+    "image": "/products/pump_filler_gfk180.png"
   },
   {
-    id: 6,
-    name: 'Ikki boshli diafragmali nasosli quyish uskunasi GFK-280',
-    russianName: 'GFK-280 Двухголовочный дозатор с диафрагменным насосом',
-    price: 270,
-    category: 'Quyish',
-    description: 'Ikki boshli va kuchliroq diafragmali nasos bilan jihozlangan quyish uskunasi.',
-    features: [
-      'Kuchlanish va quvvat: 110–220V, 50/60Hz, 120W',
-      'Maksimal sarf: 3500 ml/min',
-      'Nasos turi: diafragmali',
-      'Optimal oraliq: 5–1000 ml',
-      'Quyish oralig\'i: 5–2000 ml',
-      'Aniqlik: ±1%',
-      'O\'lchamlari: 385×257×170 mm, og\'irligi 7.5 kg'
-    ]
+    "id": "6",
+    "name": "Ikki boshli diafragmali nasosli quyish uskunasi GFK-280",
+    "russianName": "GFK-280 Двухголовочный дозатор с диафрагменным насосом",
+    "price": 270,
+    "oldPrice": 310,
+    "stockStatus": "in_stock",
+    "badge": "TAVSIYA ETILADI",
+    "category": "Quyish",
+    "description": "Ikki boshli kuchaytirilgan nasosli tizim orqali mahsuldorlikni 2 barobar oshiruvchi samarali suyuqlik quyish uskunasi.",
+    "features": [
+      "Kuchlanish va quvvat: 110–220V, 50/60Hz, 120W",
+      "Maksimal sarf: 3500 ml/min (har bir boshga)",
+      "Quyish oralig'i: 5–2000 ml",
+      "Aniqlik: ±1%",
+      "O'lchamlari: 385×257×170 mm, og'irligi 7.5 kg",
+      "Mustaqil boshqaruvchi 2 ta alohida nayza"
+    ],
+    "image1": "/products/pump_filler_gfk280.png",
+    "image2": "",
+    "image": "/products/pump_filler_gfk280.png"
   },
   {
-    id: 7,
-    name: 'Raqamli suyuqlik quyish uskunasi HZK-160',
-    russianName: 'HZK-160 Цифровой жидкостный дозатор',
-    price: 220,
-    category: 'Quyish',
-    description: 'Aniq va ishonchli raqamli suyuqlik quyish apparati.',
-    features: [
-      'Model: HZK-160',
-      'Kuchlanish va quvvat: 220V, 30W',
-      'Quyish hajmi: 5–3500 ml',
-      'Maksimal tezlik: 3.2 L/min',
-      'Aniqlik: <0.5%',
-      'Maksimal so\'rish masofasi: 2 m'
-    ]
+    "id": "7",
+    "name": "Raqamli suyuqlik quyish uskunasi HZK-160",
+    "russianName": "HZK-160 Цифровой жидкостный дозатор",
+    "price": 220,
+    "oldPrice": 250,
+    "stockStatus": "in_stock",
+    "badge": "AKSIYA",
+    "category": "Quyish",
+    "description": "Ixcham korpusli, zanglamas po'latdan ishlangan aniq va ishonchli raqamli suyuqlik quyish apparati.",
+    "features": [
+      "Model: HZK-160",
+      "Kuchlanish va quvvat: 220V, 30W",
+      "Quyish hajmi: 5–3500 ml",
+      "Maksimal tezlik: 3.2 L/min",
+      "Aniqlik: <0.5%",
+      "Maksimal so'rish masofasi: 2 m"
+    ],
+    "image1": "/products/hzk160_filler.png",
+    "image2": "",
+    "image": "/products/hzk160_filler.png"
   },
   {
-    id: 8,
-    name: 'Peristaltik nasosli quyish uskunasi CSY-3500',
-    russianName: 'CSY-3500 ДОЗАТОР С ПЕРИСТАЛЬТИЧЕСКИМ НАСОСОМ',
-    price: 420,
-    category: 'Quyish',
-    description: 'Yelim, efir moylari, kimyoviy reagentlar uchun maxsus peristaltik nasos.',
-    features: [
-      'Kuchlanish: 220V, 50–60Hz',
-      'Tavsiya etilgan oraliq: 10–500 g',
-      'Nayza uchi diametri: 8 mm',
-      'Maksimal og\'irlik: 3000 g, xatolik ≤1 g',
-      'Maksimal o\'tkazish tezligi: 2500 ml/min'
-    ]
+    "id": "8",
+    "name": "Peristaltik nasosli quyish uskunasi CSY-3500",
+    "russianName": "CSY-3500 ДОЗАТОР С ПЕРИСТАЛЬТИЧЕСКИМ НАСОСОМ",
+    "price": 420,
+    "oldPrice": 480,
+    "stockStatus": "in_stock",
+    "badge": "YANGI MAHSULOT",
+    "category": "Quyish",
+    "description": "Yelim, efir moylari, kimyoviy reagentlar, atirlar va agressiv suyuqliklar uchun mo'ljallangan maxsus peristaltik dozer.",
+    "features": [
+      "Kuchlanish: 220V, 50–60Hz",
+      "Tavsiya etilgan oraliq: 10–500 g",
+      "Nayza uchi diametri: 8 mm",
+      "Maksimal og'irlik: 3000 g, xatolik ≤1 g",
+      "Maksimal o'tkazish tezligi: 2500 ml/min",
+      "Suyuqlik nasos mexanizmiga tegmaydi (faqat shlang orqali o'tadi)"
+    ],
+    "image1": "/products/csy3500_peristaltic.png",
+    "image2": "",
+    "image": "/products/csy3500_peristaltic.png"
   },
   {
-    id: 9,
-    name: 'Peristaltik nasosli quyish mashinasi CSY-4H3200',
-    russianName: 'CSY-4H3200 — разливочная машина с перистальтическим насосом.',
-    price: 650,
-    category: 'Quyish',
-    description: 'Suv, ichimliklar, soya sousi va suyuq o\'g\'itlar uchun konveyerli quyish mashinasi.',
-    features: [
-      'Kuchlanish: 220V, 50–60Hz',
-      'Tavsiya etilgan oraliq: 10–500 ml',
-      'Nayza diametri: 8 mm',
-      'Konveyer o\'lchami: 1000 × 120 mm',
-      'Yuqori aniqlik: ±2 g',
-      'Maksimal unumdorlik: 3.2 L × 4/min'
-    ]
+    "id": "9",
+    "name": "Peristaltik nasosli quyish mashinasi CSY-4H3200",
+    "russianName": "CSY-4H3200 — разливочная машина с перистальтическим насосом.",
+    "price": 650,
+    "oldPrice": 720,
+    "stockStatus": "in_stock",
+    "badge": "BESTSELLER",
+    "category": "Quyish",
+    "description": "Suv, sharbat, souslar, o'g'itlar va dorivor eritmalar uchun 4 boshli konveyerli yuqori unumdor quyish liniyasi.",
+    "features": [
+      "Kuchlanish: 220V, 50–60Hz",
+      "Tavsiya etilgan oraliq: 10–500 ml",
+      "Nayza diametri: 8 mm (4 ta nayza)",
+      "Konveyer o'lchami: 1000 × 120 mm",
+      "Yuqori aniqlik: ±2 g",
+      "Maksimal unumdorlik: 3.2 L × 4/min",
+      "Ko'pikli suyuqliklar uchun pastdan ko'tariluvchi mexanizm"
+    ],
+    "image1": "/products/csy4h3200_conveyor.png",
+    "image2": "",
+    "image": "/products/csy4h3200_conveyor.png"
   },
   {
-    id: 10,
-    name: 'Tishli nasosli quyish uskunasi CSY-A3',
-    russianName: 'CSY-A3 ДОЗАТОР С ШЕСТЕРЁННЫМ НАСОСОМ',
-    price: 480,
-    category: 'Quyish',
-    description: 'Asal, shokolad sousi, sirop, motor moyi kabi quyuq materiallar uchun.',
-    features: [
-      'Kuchlanish: 220V, 50–60Hz',
-      'Tavsiya etilgan oraliq: 10–3000 g',
-      'Nayza diametri: 20 mm',
-      'Maksimal og\'irlik: 3000 g, xatolik ≤2 g',
-      'Haroratga chidamlilik: 70°C gacha',
-      'Maksimal sarf: 3500 ml/min'
-    ]
+    "id": "10",
+    "name": "Tishli nasosli quyish uskunasi CSY-A3",
+    "russianName": "CSY-A3 ДОЗАТОР С ШЕСТЕРЁННЫМ НАСОСОМ",
+    "price": 480,
+    "oldPrice": 530,
+    "stockStatus": "in_stock",
+    "badge": "YANGI MAHSULOT",
+    "category": "Quyish",
+    "description": "Asal, quyuq sirop, shokolad pastasi, motor moyi va quyuq souslar uchun yuqori bosimli tishli nasosli uskuna.",
+    "features": [
+      "Kuchlanish: 220V, 50–60Hz",
+      "Tavsiya etilgan oraliq: 10–3000 g",
+      "Nayza diametri: 20 mm keng o'tish kanali",
+      "Maksimal og'irlik: 3000 g, xatolik ≤2 g",
+      "Haroratga chidamlilik: 70°C gacha issiq quyish imkoni",
+      "Maksimal sarf: 3500 ml/min"
+    ],
+    "image1": "/products/csya3_gear_pump.png",
+    "image2": "",
+    "image": "/products/csya3_gear_pump.png"
   },
   {
-    id: 11,
-    name: 'Qo\'lda etiketkalash uskunasi MT-30',
-    russianName: 'MT-30 Ручной этикетировщик',
-    price: 200,
-    category: 'Etiketkalash',
-    description: 'Qo\'lda boshqariladigan yorliq yopishtirish mashinasi.',
-    features: [
-      'Tezlik: ≤30 dona/min',
-      'Aniqlik: ±0.5 mm',
-      'Rulon ichki diametri: ≥75 mm',
-      'Rulon tashqi diametri: ≤Ø150 mm',
-      'Butilka diametri: 15-150 mm'
-    ]
+    "id": "11",
+    "name": "Qo'lda etiketkalash uskunasi MT-30",
+    "russianName": "MT-30 Ручной этикетировщик",
+    "price": 200,
+    "oldPrice": 230,
+    "stockStatus": "in_stock",
+    "badge": "ARZON NARX KAFOLATI",
+    "category": "Etiketkalash",
+    "description": "Yumaloq shisha va plastik butilkalarga samokleyka etiketkalarni tekis va qabariqsiz yopishtiruvchi qulay apparat.",
+    "features": [
+      "Tezlik: ≤30 dona/min",
+      "Aniqlik: ±0.5 mm",
+      "Rulon ichki diametri: ≥75 mm",
+      "Rulon tashqi diametri: ≤Ø150 mm",
+      "Butilka diametri: 15-150 mm oralig'i",
+      "Etiketka kengligi: 10-100 mm"
+    ],
+    "image1": "/products/mt30_labeler.png",
+    "image2": "",
+    "image": "/products/mt30_labeler.png"
   },
   {
-    id: 12,
-    name: 'Bosim rolikli qo\'lda etiketkalash uskunasi MT-30',
-    russianName: 'MT-30 Ручной этикетировщик с Прижимной роликом',
-    price: 300,
-    category: 'Etiketkalash',
-    description: 'Yaxshilangan bosim roligi bilan yorliq yopishtirish apparati.',
-    features: [
-      'Tezlik: ≤30 dona/min',
-      'Aniqlik: ±0.5 mm',
-      'Rulon ichki diametri: ≥75 mm',
-      'Rulon tashqi diametri: ≤Ø150 mm',
-      'Butilka diametri: 15-150 mm'
-    ]
+    "id": "12",
+    "name": "Bosim rolikli qo'lda etiketkalash uskunasi MT-30",
+    "russianName": "MT-30 Ручной этикетировщик с Прижимной роликом",
+    "price": 300,
+    "oldPrice": 340,
+    "stockStatus": "in_stock",
+    "badge": "BESTSELLER",
+    "category": "Etiketkalash",
+    "description": "Yuqori qismdagi qo'shimcha bosim roligi bilan qalinroq va kattaroq idishlarni qisib ushlab mustahkam yopishtiruvchi uskuna.",
+    "features": [
+      "Tezlik: ≤30 dona/min",
+      "Aniqlik: ±0.5 mm",
+      "Yuqori tutuvchi po'lat prishimnoy rolik",
+      "Rulon tashqi diametri: ≤Ø150 mm",
+      "Butilka diametri: 15-150 mm oralig'i"
+    ],
+    "image1": "/products/mt30_roller_labeler.png",
+    "image2": "",
+    "image": "/products/mt30_roller_labeler.png"
   },
   {
-    id: 13,
-    name: 'Yumaloq butilkalar uchun etiketkalash uskunasi MT-50S',
-    russianName: 'MT-50S Этикетировщик для круглых бутылок, корпус из нержавеющей стали',
-    price: 750,
-    category: 'Etiketkalash',
-    description: 'Zanglamas po\'latdan yasalgan, Autonics datchikli etiketkalash mashinasi.',
-    features: [
-      'Kuchlanish: AC 220/110V, 50-60Hz',
-      'Quvvat: 40W',
-      'Tezlik: 25-50 dona/min',
-      'Aniqlik: ±0.5 mm',
-      'Butilka diametri: Ø15-120 mm'
-    ]
+    "id": "13",
+    "name": "Yumaloq butilkalar uchun etiketkalash uskunasi MT-50S",
+    "russianName": "MT-50S Этикетировщик для круглых бутылок, корпус из нержавеющей стали",
+    "price": 750,
+    "oldPrice": 820,
+    "stockStatus": "in_stock",
+    "badge": "TAVSIYA ETILADI",
+    "category": "Etiketkalash",
+    "description": "Zanglamas po'latdan ishlangan, Autonics optik datchikli yarim avtomatik professional etiketkalash uskunasi.",
+    "features": [
+      "Kuchlanish: AC 220/110V, 50-60Hz",
+      "Quvvat: 40W tejamkor dvigatel",
+      "Tezlik: 25-50 dona/min",
+      "Aniqlik: ±0.5 mm",
+      "Butilka diametri: Ø15-120 mm",
+      "Datchik: Autonics infraqizil etiketka datchigi"
+    ],
+    "image1": "/products/mt50s_labeler.png",
+    "image2": "",
+    "image": "/products/mt50s_labeler.png"
   },
   {
-    id: 14,
-    name: 'Yarim avtomat etiketkalash va sanalash uskunasi MT-50SC',
-    russianName: 'MT-50SC Полуавтоматический этикетировщик для круглых бутылок с датированием',
-    price: 1000,
-    category: 'Etiketkalash',
-    description: 'Yorliq yopishtirish va ayni vaqtda sana urish funksiyasiga ega apparat.',
-    features: [
-      'Kuchlanish: AC 220/110V, 50-60Hz',
-      'Quvvat: 40W',
-      'Tezlik: 25-50 dona/min',
-      'Aniqlik: ±0.5 mm',
-      'Butilka diametri: Ø15-120 mm',
-      'Sana bloki: 2×3×15 mm shrift'
-    ]
+    "id": "14",
+    "name": "Yarim avtomat etiketkalash va sanalash uskunasi MT-50SC",
+    "russianName": "MT-50SC Полуавтоматический этикетировщик для круглых бутылок с датированием",
+    "price": 1000,
+    "oldPrice": 1100,
+    "stockStatus": "in_stock",
+    "badge": "YANGI MAHSULOT",
+    "category": "Etiketkalash",
+    "description": "Yorliq yopishtirish va aynan bir vaqtda issiq lenta orqali ishlab chiqarilgan sanani bosish imkonini beruvchi 2-in-1 apparat.",
+    "features": [
+      "Kuchlanish: AC 220/110V, 50-60Hz",
+      "Quvvat: 40W",
+      "Tezlik: 25-50 dona/min",
+      "Aniqlik: ±0.5 mm",
+      "Butilka diametri: Ø15-120 mm",
+      "Sana bloki: 2×3×15 mm latun shriftli lenta dater"
+    ],
+    "image1": "/products/mt50sc_labeler.png",
+    "image2": "",
+    "image": "/products/mt50sc_labeler.png"
   },
   {
-    id: 15,
-    name: 'Qo\'l markiratori M11 (12.7mm)',
-    russianName: 'Ручной маркиратор модель:M11 12.7mm Black ink cartridge',
-    price: 150,
-    category: 'Markirovka',
-    description: 'Karton, plastik, metall va shisha sirtlariga bosib chiqarish uchun qulay markirator.',
-    features: [
-      'Bosish balandligi: <= 12.7 mm',
-      'Bosish masofasi: 2 ~ 5 mm',
-      'Aniqlik: 600DPI',
-      'Karton, plastik, metall, shisha sirtlar uchun',
-      'Ekran: 2.4 dyuym sensorli',
-      'Batareya: ~4 soat'
-    ]
+    "id": "15",
+    "name": "Qo'l markiratori M11 (12.7mm)",
+    "russianName": "Ручной маркиратор модель:M11 12.7mm Black ink cartridge",
+    "price": 150,
+    "oldPrice": 180,
+    "stockStatus": "in_stock",
+    "badge": "ARZON NARX KAFOLATI",
+    "category": "Markirovka",
+    "description": "Ixcham, yengil va qulay portativ qo'l markiratori. Sana, vaqt, logotip, shtrix-kod va partiya raqamlarini bosadi.",
+    "features": [
+      "Bosish balandligi: <= 12.7 mm",
+      "Bosish masofasi: 2 ~ 5 mm",
+      "Aniqlik: 600 DPI yuqori aniqlik",
+      "Karton, plastik, metall, shisha, yog'och sirtlar",
+      "Ekran: 2.4 dyuym sensorli rangli ekran",
+      "Batareya: ~4 soat uzluksiz ishlash"
+    ],
+    "image1": "/products/m11_coder.png",
+    "image2": "",
+    "image": "/products/m11_coder.png"
   },
   {
-    id: 16,
-    name: 'Qo\'l markiratori H4 (12.7mm)',
-    russianName: 'Ручной маркиратор модель:H4 12.7mm Black ink cartridge',
-    price: 170,
-    category: 'Markirovka',
-    description: 'Har xil sirtlarga matn, vaqt, shtrixkod/QR-kod bosib chiqaruvchi qurilma.',
-    features: [
-      'Bosish balandligi: <= 12.7 mm',
-      'Bosish masofasi: 2 ~ 5 mm',
-      'Aniqlik: 600DPI',
-      'Karton, plastik, metall, shisha sirtlar uchun',
-      'Ekran: 2.4 dyuym sensorli',
-      'Batareya: ~6 soat'
-    ]
+    "id": "16",
+    "name": "Qo'l markiratori H4 (12.7mm)",
+    "russianName": "Ручной маркиратор модель:H4 12.7mm Black ink cartridge",
+    "price": 170,
+    "oldPrice": 200,
+    "stockStatus": "in_stock",
+    "badge": "BESTSELLER",
+    "category": "Markirovka",
+    "description": "Ergonomik to'pponcha tutqichli, kuchli batareyali universal sana va kod bosuvchi termostruyniy dater.",
+    "features": [
+      "Bosish balandligi: <= 12.7 mm",
+      "Bosish masofasi: 2 ~ 5 mm",
+      "Aniqlik: 600 DPI",
+      "Har xil tillarda matn va logotiplar kiritish",
+      "Ekran: 2.4 dyuym sensorli ekran",
+      "Batareya: ~6 soat faol ishlash",
+      "Korpusi: zarbaga chidamli sanoat plastigi"
+    ],
+    "image1": "/products/h4_coder.png",
+    "image2": "",
+    "image": "/products/h4_coder.png"
   },
   {
-    id: 17,
-    name: 'Qo\'l markiratori Z10 (12.7mm)',
-    russianName: 'Ручной маркиратор модель:Z10 12.7mm Black ink cartridge',
-    price: 200,
-    category: 'Markirovka',
-    description: 'Katta sensorli ekranli yuqori aniqlikdagi qulay markirator.',
-    features: [
-      'Bosish balandligi: <= 12.7 mm',
-      'Bosish masofasi: 2 ~ 5 mm',
-      'Aniqlik: 600DPI',
-      'Karton, plastik, metall, shisha sirtlar uchun',
-      'Ekran: 4.3 dyuym sensorli',
-      'Batareya: ~8 soat'
-    ]
+    "id": "17",
+    "name": "Qo'l markiratori Z10 (12.7mm)",
+    "russianName": "Ручной маркиратор модель:Z10 12.7mm Black ink cartridge",
+    "price": 200,
+    "oldPrice": 230,
+    "stockStatus": "in_stock",
+    "badge": "TAVSIYA ETILADI",
+    "category": "Markirovka",
+    "description": "Katta 4.3 dyuymli qulay sensorli ekranga ega, metall korpusli professional qo'l dateri.",
+    "features": [
+      "Bosish balandligi: <= 12.7 mm",
+      "Bosish masofasi: 2 ~ 5 mm",
+      "Aniqlik: 600 DPI",
+      "Karton, plastik, metall, shisha sirtlar uchun",
+      "Ekran: 4.3 dyuym katta sensorli ekran",
+      "Batareya: ~8 soat uzoq muddatli akkumulyator"
+    ],
+    "image1": "/products/z10_coder.png",
+    "image2": "",
+    "image": "/products/z10_coder.png"
   },
   {
-    id: 18,
-    name: 'Stol usti markirator to\'plami CP60 (12.7mm)',
-    russianName: 'Настольный маркиратор комплект модель:CP60 12.7mm Black ink cartridge',
-    price: 500,
-    category: 'Markirovka',
-    description: 'Stol ustiga o\'rnatiladigan markirovka qilish tizimi to\'plami.',
-    features: [
-      'Bosish balandligi: <= 12.7 mm',
-      'Bosish masofasi: 2 ~ 5 mm',
-      'Aniqlik: 600DPI',
-      'Karton, plastik, metall, shisha sirtlar uchun',
-      'Ekran: 4.3 dyuym sensorli'
-    ]
+    "id": "18",
+    "name": "Stol usti markirator to'plami CP60 (12.7mm)",
+    "russianName": "Настольный маркиратор комплект модель:CP60 12.7mm Black ink cartridge",
+    "price": 500,
+    "oldPrice": 560,
+    "stockStatus": "in_stock",
+    "badge": "BESTSELLER",
+    "category": "Markirovka",
+    "description": "Konveyer lentalari ustiga o'rnatiladigan, optik datchik va boshqaruv bloki bilan jihozlangan avtomatlashtirilgan markirovka tizimi.",
+    "features": [
+      "Bosish balandligi: <= 12.7 mm",
+      "Bosish masofasi: 2 ~ 5 mm",
+      "Aniqlik: 600 DPI",
+      "Konveyer bilan to'liq sinxronlashuv",
+      "Ekran: 4.3 dyuym sensorli aqlli monitor",
+      "Har xil sirtlarga yuqori tezlikda bosish"
+    ],
+    "image1": "/products/cp60_coder.png",
+    "image2": "",
+    "image": "/products/cp60_coder.png"
   },
   {
-    id: 19,
-    name: 'Qora siyoh kartriji (12.7mm)',
-    russianName: 'Картредж чернила 12.7mm Black ink cartridge',
-    price: 50,
-    category: 'Ehtiyot qismlar',
-    description: 'Markiratorlar uchun qora rangli original siyoh kartriji.',
-    features: [
-      'Siyoh turi: Solvent, UV',
-      'Og\'irligi: 0.14 kg',
-      'Ruxsat: 600dpi',
-      'TIJ printerlar uchun',
-      'Kafolat: 12 oy'
-    ]
+    "id": "19",
+    "name": "Qora tez quriydigan siyoh kartriji (12.7mm)",
+    "russianName": "Картредж чернила 12.7mm Black ink cartridge",
+    "price": 50,
+    "oldPrice": 60,
+    "stockStatus": "in_stock",
+    "badge": "BESTSELLER",
+    "category": "Ehtiyot qismlar",
+    "description": "TIJ printerlar uchun original, suvga va artilishga chidamli tez quriydigan (solvent) qora siyoh kartriji.",
+    "features": [
+      "Siyoh turi: Solvent, UV va suvga chidamli",
+      "Og'irligi: 0.14 kg, Sig'imi: 42 ml",
+      "Ruxsat: 600 DPI",
+      "Qurish vaqti: 1-3 sekund",
+      "Barcha TIJ 12.7mm printerlar uchun mos"
+    ],
+    "image1": "/products/black_cartridge.png",
+    "image2": "",
+    "image": "/products/black_cartridge.png"
   },
   {
-    id: 20,
-    name: 'Rangli siyoh kartriji (12.7mm)',
-    russianName: 'Картредж чернила 12.7mm цветные (красный,зеленый, желтый,синий и белый)',
-    price: 60,
-    category: 'Ehtiyot qismlar',
-    description: 'Markiratorlar uchun qizil, yashil, sariq, ko\'k va oq rangli siyoh kartrijlari.',
-    features: [
-      'Ranglar: qizil, yashil, sariq, ko\'k, oq',
-      'Siyoh turi: Solvent, UV',
-      'Og\'irligi: 0.14 kg',
-      'Ruxsat: 600dpi',
-      'TIJ printerlar uchun',
-      'Kafolat: 12 oy'
-    ]
+    "id": "20",
+    "name": "Rangli siyoh kartrijlari (12.7mm)",
+    "russianName": "Картредж чернила 12.7mm цветные (красный,зеленый, желтый,синий и белый)",
+    "price": 60,
+    "oldPrice": 75,
+    "stockStatus": "in_stock",
+    "badge": "YANGI MAHSULOT",
+    "category": "Ehtiyot qismlar",
+    "description": "Qizil, yashil, sariq, ko'k va oq rangdagi tez quriydigan original siyoh kartrijlari.",
+    "features": [
+      "Ranglar tanlovi: qizil, yashil, sariq, ko'k, oq",
+      "Siyoh turi: Solvent, tez quriydi",
+      "Og'irligi: 0.14 kg, Sig'imi: 42 ml",
+      "Ruxsat: 600 DPI",
+      "Kafolat: 12 oy saqlash kafolati"
+    ],
+    "image1": "/products/color_cartridges.png",
+    "image2": "",
+    "image": "/products/color_cartridges.png"
+  },
+  {
+    "id": "21",
+    "name": "Bankalarni yopish uskunasi (4 ta nasadka bilan)",
+    "russianName": "Закруточная машинка для банок (4 насадки: 230 мл, 250 мл, 330 мл, 500 мл)",
+    "price": 700,
+    "oldPrice": 780,
+    "stockStatus": "in_stock",
+    "badge": "BESTSELLER",
+    "category": "Qadoqlash",
+    "description": "Ichimliklar, sharbatlar, choy va quruq mevalar uchun tunuka yoki plastik bankalarni germetik yopuvchi apparat.",
+    "features": [
+      "Unumdorlik: 5 sekund / bitta banka",
+      "4 ta nasadka komplektda: 230ml, 250ml, 330ml, 500ml",
+      "Diametri: 55 mm yoki buyurtma asosida",
+      "Og'irligi: 40 kg barqaror korpus",
+      "Avtomatik presslash va aylantirib qisish"
+    ],
+    "image1": "/products/can_sealer.png",
+    "image2": "",
+    "image": "/products/can_sealer.png"
+  },
+  {
+    "id": "22",
+    "name": "Standart latun harf-boshlar to'plami",
+    "russianName": "Комплект стандартных латунных головок",
+    "price": 40,
+    "oldPrice": 50,
+    "stockStatus": "in_stock",
+    "badge": "ARZON NARX KAFOLATI",
+    "category": "Ehtiyot qismlar",
+    "description": "Termodaterlar va lenta sanalash mashinalari uchun qattiq latundan yasalgan harflar va belgilar to'plami.",
+    "features": [
+      "Tarkibi: A-Z (1 tadan), 0-8 (5 tadan)",
+      "/ belgisi: 2 dona, Probel: 5 dona",
+      "Jami: 63 dona belgilar",
+      "Yuqori haroratga chidamli qotishma"
+    ],
+    "image1": "/products/brass_heads_set.png",
+    "image2": "",
+    "image": "/products/brass_heads_set.png"
+  },
+  {
+    "id": "23",
+    "name": "Latun raqamli boshlar 0–9 to'plami",
+    "russianName": "Латуновые цифровые головки 0–9, комплект",
+    "price": 8,
+    "oldPrice": 12,
+    "stockStatus": "in_stock",
+    "badge": "ARZON NARX KAFOLATI",
+    "category": "Ehtiyot qismlar",
+    "description": "Sana, oy va yil raqamlarini almashtirib bosish uchun 0 dan 9 gacha bo'lgan latun shriftlar to'plami.",
+    "features": [
+      "Raqamlar: 0 dan 9 gacha",
+      "Har bir raqamdan 5 tadan",
+      "Jami belgilar: 50 dona",
+      "O'lchami: 2×3×15 mm universal"
+    ],
+    "image1": "/products/brass_digits_set.png",
+    "image2": "",
+    "image": "/products/brass_digits_set.png"
   }
 ];

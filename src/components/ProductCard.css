@@ -67,7 +67,8 @@
 
 .old-price {
   text-decoration: line-through;
-  color: #ef4444; /* qizil rang (red) as requested */
+  color: #ef4444;
+  /* qizil rang (red) as requested */
   font-size: 0.95rem;
   font-weight: 700;
 }
@@ -153,7 +154,8 @@
 }
 
 .discount-badge {
-  background-color: #ef4444; /* qizil */
+  background-color: #ef4444;
+  /* qizil */
   color: white;
 }
 
