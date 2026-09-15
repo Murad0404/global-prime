@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { db } from './firebase';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductCatalog from './components/ProductCatalog';
@@ -14,37 +16,22 @@ function App() {
   const [heroSlides, setHeroSlides] = useState([]);
 
   useEffect(() => {
-    // Fetch products
-    fetch(`/api/products`)
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) {
-          setProducts(data);
-        } else {
-          console.error("Products API error:", data);
-          setProducts([]);
-        }
-      })
-      .catch(err => {
-        console.error("Products yuklashda xatolik:", err);
-        setProducts([]);
-      });
+    const fetchData = async () => {
+      try {
+        // Fetch products
+        const productsSnapshot = await getDocs(collection(db, "products"));
+        const productsData = productsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setProducts(productsData);
 
-    // Fetch hero slides
-    fetch(`/api/heroSlides`)
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) {
-          setHeroSlides(data);
-        } else {
-          console.error("Slides API error:", data);
-          setHeroSlides([]);
-        }
-      })
-      .catch(err => {
-        console.error("Slides yuklashda xatolik:", err);
-        setHeroSlides([]);
-      });
+        // Fetch hero slides
+        const slidesSnapshot = await getDocs(collection(db, "heroSlides"));
+        const slidesData = slidesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setHeroSlides(slidesData);
+      } catch (error) {
+        console.error("Firebase'dan ma'lumotlarni yuklashda xatolik:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   const handleOrderClick = (product) => {
@@ -58,23 +45,18 @@ function App() {
   // --- Product Handlers ---
   const handleAddProduct = async (newProduct) => {
     try {
-      const res = await fetch(`/api/products`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newProduct)
-      });
-      const data = await res.json();
-      setProducts(prev => [...prev, data]);
+      const docRef = await addDoc(collection(db, "products"), newProduct);
+      setProducts(prev => [...prev, { id: docRef.id, ...newProduct }]);
     } catch (err) {
-      alert("Xatolik! Backend ishlayotganiga ishonch hosil qiling.");
+      alert("Xatolik yuz berdi!");
       console.error(err);
     }
   };
 
   const handleDeleteProduct = async (id) => {
     try {
-      await fetch(`/api/products/${id}`, { method: 'DELETE' });
-      setProducts(prev => prev.filter(p => String(p.id) !== String(id)));
+      await deleteDoc(doc(db, "products", id));
+      setProducts(prev => prev.filter(p => p.id !== id));
     } catch (err) {
       console.error(err);
     }
@@ -82,13 +64,11 @@ function App() {
 
   const handleUpdateProduct = async (updatedProduct) => {
     try {
-      const res = await fetch(`/api/products/${updatedProduct.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedProduct)
-      });
-      const data = await res.json();
-      setProducts(prev => prev.map(p => String(p.id) === String(data.id) ? data : p));
+      const productRef = doc(db, "products", updatedProduct.id);
+      const dataToUpdate = { ...updatedProduct };
+      delete dataToUpdate.id; // Don't write the ID inside the document fields unnecessarily
+      await updateDoc(productRef, dataToUpdate);
+      setProducts(prev => prev.map(p => p.id === updatedProduct.id ? updatedProduct : p));
     } catch (err) {
       console.error(err);
     }
@@ -97,13 +77,8 @@ function App() {
   // --- Hero Slides Handlers ---
   const handleAddHeroSlide = async (newSlide) => {
     try {
-      const res = await fetch(`/api/heroSlides`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newSlide)
-      });
-      const data = await res.json();
-      setHeroSlides([...heroSlides, data]);
+      const docRef = await addDoc(collection(db, "heroSlides"), newSlide);
+      setHeroSlides(prev => [...prev, { id: docRef.id, ...newSlide }]);
     } catch (err) {
       console.error(err);
     }
@@ -111,8 +86,8 @@ function App() {
 
   const handleDeleteHeroSlide = async (id) => {
     try {
-      await fetch(`/api/heroSlides/${id}`, { method: 'DELETE' });
-      setHeroSlides(heroSlides.filter(s => String(s.id) !== String(id)));
+      await deleteDoc(doc(db, "heroSlides", id));
+      setHeroSlides(prev => prev.filter(s => s.id !== id));
     } catch (err) {
       console.error(err);
     }
@@ -120,13 +95,11 @@ function App() {
 
   const handleUpdateHeroSlide = async (updatedSlide) => {
     try {
-      const res = await fetch(`/api/heroSlides/${updatedSlide.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedSlide)
-      });
-      const data = await res.json();
-      setHeroSlides(heroSlides.map(s => String(s.id) === String(data.id) ? data : s));
+      const slideRef = doc(db, "heroSlides", updatedSlide.id);
+      const dataToUpdate = { ...updatedSlide };
+      delete dataToUpdate.id;
+      await updateDoc(slideRef, dataToUpdate);
+      setHeroSlides(prev => prev.map(s => s.id === updatedSlide.id ? updatedSlide : s));
     } catch (err) {
       console.error(err);
     }

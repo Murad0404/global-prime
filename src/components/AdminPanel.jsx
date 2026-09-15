@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ref, uploadString, getDownloadURL } from 'firebase/storage';
+import { storage } from '../firebase';
 import './AdminPanel.css';
 
 const AdminPanel = ({
@@ -69,17 +71,14 @@ const AdminPanel = ({
 
   const [isUploading, setIsUploading] = useState(false);
 
-  const uploadToBlob = async (base64, filename) => {
+  const uploadToFirebase = async (base64, filename) => {
     try {
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ filename, base64 })
-      });
-      const data = await res.json();
-      return data.url;
-    } catch (e) {
-      console.error(e);
+      const storageRef = ref(storage, `images/${filename}`);
+      await uploadString(storageRef, base64, 'data_url');
+      const downloadURL = await getDownloadURL(storageRef);
+      return downloadURL;
+    } catch (error) {
+      console.error("Firebase Storage xatoligi:", error);
       showMessage('Rasm yuklashda xatolik yuz berdi!', 'error');
       return null;
     }
@@ -95,7 +94,7 @@ const AdminPanel = ({
       }
       setIsUploading(true);
       compressImage(file, targetForm, async (compressedBase64) => {
-        const url = await uploadToBlob(compressedBase64, `${Date.now()}_${file.name}`);
+        const url = await uploadToFirebase(compressedBase64, `${Date.now()}_${file.name}`);
         if (url) {
           if (targetForm === 'product') {
             setProductFormData(prev => ({ ...prev, [fieldName]: url }));
@@ -124,7 +123,7 @@ const AdminPanel = ({
         return;
       }
       compressImage(file, 'product', async (compressedBase64) => {
-        const url = await uploadToBlob(compressedBase64, `${Date.now()}_${file.name}`);
+        const url = await uploadToFirebase(compressedBase64, `${Date.now()}_${file.name}`);
         if (url) {
           const fieldName = index === 0 ? 'image1' : 'image2';
           setProductFormData(prev => ({ ...prev, [fieldName]: url }));
