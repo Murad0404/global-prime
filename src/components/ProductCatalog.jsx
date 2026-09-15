@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../LanguageContext';
 import ProductCard from './ProductCard';
 import './ProductCatalog.css';
 
 const ProductCatalog = ({ products = [], onOrderProduct }) => {
-  const [activeCategory, setActiveCategory] = useState('Barchasi');
+  const { t } = useLanguage();
+  const [activeCategory, setActiveCategory] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Get unique categories
-  const categories = ['Barchasi', ...new Set(products.map(p => p.category))];
+  const categories = ['ALL', ...new Set(products.map(p => p.category))];
 
   // Filter products
   const filteredProducts = products.filter(p => {
-    const matchCategory = activeCategory === 'Barchasi' || p.category === activeCategory;
+    const matchCategory = activeCategory === 'ALL' || p.category === activeCategory;
 
     // Smart search logic like YouTube
     const searchTerms = searchQuery.toLowerCase().split(/\s+/).filter(t => t.length > 0);
@@ -32,10 +34,10 @@ const ProductCatalog = ({ products = [], onOrderProduct }) => {
     <section id="catalog" className="catalog">
       <div className="container">
         <div className="catalog-header text-center">
-          <h2 className="section-title">Bizning Mahsulotlar</h2>
+          <h2 className="section-title">{t('catalog_title')}</h2>
           <div className="title-underline"></div>
           <p className="section-subtitle">
-            Eng sifatli va ishonchli uskunalar bilan tanishing
+            {t('catalog_subtitle')}
           </p>
         </div>
 
@@ -43,7 +45,7 @@ const ProductCatalog = ({ products = [], onOrderProduct }) => {
           <input
             type="text"
             className="search-input"
-            placeholder="Mahsulot yoki kategoriya nomi orqali qidirish..."
+            placeholder={t('catalog_search')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -56,7 +58,7 @@ const ProductCatalog = ({ products = [], onOrderProduct }) => {
               className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
               onClick={() => setActiveCategory(category)}
             >
-              {category}
+              {category === 'ALL' ? t('catalog_all') : category}
             </button>
           ))}
         </div>
@@ -78,7 +80,7 @@ const ProductCatalog = ({ products = [], onOrderProduct }) => {
 
         {filteredProducts.length === 0 && (
           <div className="empty-state">
-            <p>Bu toifada mahsulot topilmadi.</p>
+            <p>{t('catalog_empty')}</p>
           </div>
         )}
       </div>

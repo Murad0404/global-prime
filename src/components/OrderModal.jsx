@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import { useLanguage } from '../LanguageContext';
 import './OrderModal.css';
 
 const OrderModal = ({ product, onClose, settings }) => {
+  const { language, t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -76,15 +78,17 @@ const OrderModal = ({ product, onClose, settings }) => {
         {submitted ? (
           <div className="success-message">
             <div className="success-icon">✓</div>
-            <h3>So'rovingiz qabul qilindi!</h3>
-            <p>Tez orada siz bilan bog'lanamiz.</p>
+            <h3>{t('form_success_title')}</h3>
+            <p>{t('form_success_desc')}</p>
           </div>
         ) : (
           <>
-            <h2 className="modal-title">Buyurtma berish</h2>
+            <h2 className="modal-title">{t('modal_title')}</h2>
             <div className="modal-product-info">
-              <h4>{product.name}</h4>
-              <p className="modal-price">${product.price}</p>
+              <h4>
+                {language === 'ru' ? (product.russianName || product.name) : (language === 'en' && product.englishName ? product.englishName : product.name)}
+              </h4>
+              <p className="modal-price">{t('modal_price')} ${product.price}</p>
               
               {(product.image1 || product.image2 || product.image3) && (
                 <div className="modal-images-slider">
@@ -99,7 +103,7 @@ const OrderModal = ({ product, onClose, settings }) => {
                       style={{ width: '100%', height: '300px', objectFit: 'contain', borderRadius: '8px', backgroundColor: '#f3f4f6' }} 
                     />
                     <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(0,0,0,0.6)', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '12px' }}>
-                      Kattalashtirish
+                      {t('modal_zoom')}
                     </div>
                   </div>
                   
@@ -126,45 +130,45 @@ const OrderModal = ({ product, onClose, settings }) => {
             
             <form onSubmit={handleSubmit} className="order-form" style={{ marginTop: '20px' }}>
               <div className="form-group">
-                <label htmlFor="name">Ism-sharifingiz</label>
+                <label htmlFor="name">{t('form_name_label')}</label>
                 <input 
                   type="text" 
                   id="name" 
                   name="name" 
                   required 
-                  placeholder="Ali Valiyev"
+                  placeholder={t('form_name_placeholder')}
                   value={formData.name}
                   onChange={handleChange}
                 />
               </div>
               
               <div className="form-group">
-                <label htmlFor="phone">Telefon raqamingiz</label>
+                <label htmlFor="phone">{t('form_phone_label')}</label>
                 <input 
                   type="tel" 
                   id="phone" 
                   name="phone" 
                   required 
-                  placeholder="+998 90 123 45 67"
+                  placeholder={t('form_phone_placeholder')}
                   value={formData.phone}
                   onChange={handleChange}
                 />
               </div>
               
               <div className="form-group">
-                <label htmlFor="message">Qo'shimcha xabar (ixtiyoriy)</label>
+                <label htmlFor="message">{t('form_msg_label')}</label>
                 <textarea 
                   id="message" 
                   name="message" 
                   rows="3" 
-                  placeholder="Buyurtma haqida qo'shimcha ma'lumot qoldirishingiz mumkin..."
+                  placeholder={t('form_msg_placeholder')}
                   value={formData.message}
                   onChange={handleChange}
                 ></textarea>
               </div>
               
               <button type="submit" className="btn btn-primary w-100 submit-btn" disabled={isSending}>
-                {isSending ? "Yuborilmoqda..." : "So'rov yuborish"}
+                {isSending ? t('form_sending') : t('form_submit')}
               </button>
             </form>
           </>

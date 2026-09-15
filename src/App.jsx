@@ -8,6 +8,7 @@ import ProductCatalog from './components/ProductCatalog';
 import OrderModal from './components/OrderModal';
 import Footer from './components/Footer';
 import AdminRoute from './components/AdminRoute';
+import { LanguageProvider } from './LanguageContext';
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -141,44 +142,46 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="app-wrapper">
-        <Header settings={settings} />
-        <main>
-          <Routes>
-            <Route path="/" element={
-              <>
-                <Hero slides={heroSlides} />
-                <ProductCatalog products={products} onOrderProduct={handleOrderClick} />
-              </>
-            } />
-            <Route path="/admin" element={
-              <AdminRoute
-                products={products}
-                onAddProduct={handleAddProduct}
-                onDeleteProduct={handleDeleteProduct}
-                onUpdateProduct={handleUpdateProduct}
-                heroSlides={heroSlides}
-                onAddHeroSlide={handleAddHeroSlide}
-                onDeleteHeroSlide={handleDeleteHeroSlide}
-                onUpdateHeroSlide={handleUpdateHeroSlide}
-                settings={settings}
-                onUpdateSettings={handleUpdateSettings}
-              />
-            } />
-          </Routes>
-        </main>
-        <Footer settings={settings} />
+    <LanguageProvider>
+      <Router>
+        <div className="app-wrapper">
+          <Header settings={settings} />
+          <main>
+            <Routes>
+              <Route path="/" element={
+                <>
+                  <Hero slides={heroSlides} />
+                  <ProductCatalog products={products} onOrderProduct={handleOrderClick} />
+                </>
+              } />
+              <Route path="/admin" element={
+                <AdminRoute
+                  products={products}
+                  onAddProduct={handleAddProduct}
+                  onDeleteProduct={handleDeleteProduct}
+                  onUpdateProduct={handleUpdateProduct}
+                  heroSlides={heroSlides}
+                  onAddHeroSlide={handleAddHeroSlide}
+                  onDeleteHeroSlide={handleDeleteHeroSlide}
+                  onUpdateHeroSlide={handleUpdateHeroSlide}
+                  settings={settings}
+                  onUpdateSettings={handleUpdateSettings}
+                />
+              } />
+            </Routes>
+          </main>
+          <Footer settings={settings} />
 
-        {selectedProduct && (
-          <OrderModal
-            product={selectedProduct}
-            onClose={handleCloseModal}
-            settings={settings}
-          />
-        )}
-      </div>
-    </Router>
+          {selectedProduct && (
+            <OrderModal
+              product={selectedProduct}
+              onClose={handleCloseModal}
+              settings={settings}
+            />
+          )}
+        </div>
+      </Router>
+    </LanguageProvider>
   );
 }
 

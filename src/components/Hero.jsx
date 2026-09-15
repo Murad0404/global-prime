@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../LanguageContext';
 import './Hero.css';
 
 const Hero = ({ slides = [] }) => {
+  const { t } = useLanguage();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   useEffect(() => {
@@ -21,14 +23,14 @@ const Hero = ({ slides = [] }) => {
       <div className="container hero-container">
         <div className="hero-content">
           <h1 className="hero-title animate-fade-in">
-            Sanoat uskunalari va <span className="highlight">qadoqlash texnologiyalari</span>
+            {t('hero_title')}<span className="highlight">{t('hero_title_highlight')}</span>
           </h1>
           <p className="hero-description animate-fade-in" style={{ animationDelay: '100ms' }}>
-            Global Prime Uzbekistan - O'zbekistondagi ishonchli hamkoringiz. Biz yuqori sifatli suyuqlik quyish, etiketkalash va markirovka uskunalarini taklif etamiz.
+            {t('hero_desc')}
           </p>
           <div className="hero-actions animate-fade-in" style={{ animationDelay: '200ms' }}>
-            <a href="#catalog" className="btn btn-primary">Katalogni ko'rish</a>
-            <a href="#contact" className="btn btn-outline">Biz bilan bog'lanish</a>
+            <a href="#catalog" className="btn btn-primary">{t('btn_view_catalog')}</a>
+            <a href="#contact" className="btn btn-outline">{t('btn_contact_us')}</a>
           </div>
         </div>
         

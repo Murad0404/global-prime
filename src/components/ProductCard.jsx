@@ -1,8 +1,10 @@
 import React from 'react';
 import { Package, Settings, ChevronRight } from 'lucide-react';
+import { useLanguage } from '../LanguageContext';
 import './ProductCard.css';
 
 const ProductCard = ({ product, onOrder }) => {
+  const { language, t } = useLanguage();
   const oldP = parseFloat(product.oldPrice);
   const newP = parseFloat(product.price);
   const hasDiscount = !isNaN(oldP) && !isNaN(newP) && oldP > newP;
@@ -17,10 +19,10 @@ const ProductCard = ({ product, onOrder }) => {
       <div className="product-image-container">
         <div className="product-badges">
           {hasDiscount && (
-            <div className="badge discount-badge">-{discountPercent}% chegirma</div>
+            <div className="badge discount-badge">-{discountPercent}% {t('discount')}</div>
           )}
           <div className={`badge stock-badge ${product.stockStatus === 'on_order' ? 'on-order' : 'in-stock'}`}>
-            {product.stockStatus === 'on_order' ? 'Buyurtma asosida' : 'Omborda mavjud'}
+            {product.stockStatus === 'on_order' ? t('status_on_order') : t('status_in_stock')}
           </div>
         </div>
 
@@ -39,8 +41,9 @@ const ProductCard = ({ product, onOrder }) => {
       </div>
 
       <div className="product-content">
-        <h3 className="product-title">{product.name}</h3>
-        <p className="product-russian-title">{product.russianName}</p>
+        <h3 className="product-title">
+          {language === 'ru' ? (product.russianName || product.name) : (language === 'en' && product.englishName ? product.englishName : product.name)}
+        </h3>
         <p className="product-desc">{product.description}</p>
 
         <div className="product-features">
@@ -52,7 +55,7 @@ const ProductCard = ({ product, onOrder }) => {
           ))}
           {product.features && product.features.length > 3 && (
             <div className="feature-item more-features">
-              <span>+ yana {product.features.length - 3} ta xususiyat</span>
+              <span>{t('more_features')} {product.features.length - 3} {t('features_count')}</span>
             </div>
           )}
         </div>
@@ -60,7 +63,7 @@ const ProductCard = ({ product, onOrder }) => {
 
       <div className="product-footer">
         <button className="btn btn-primary w-100" onClick={() => onOrder(product)}>
-          Buyurtma berish <ChevronRight size={18} />
+          {t('btn_order_now')} <ChevronRight size={18} />
         </button>
       </div>
     </div>
