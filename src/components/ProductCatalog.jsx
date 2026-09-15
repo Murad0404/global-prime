@@ -1,15 +1,38 @@
 import React, { useState } from 'react';
+import { Package, Settings as SettingsIcon, Droplet, Zap, Box, Truck, PenTool, Layers, Cpu, Wrench } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 import ProductCard from './ProductCard';
 import './ProductCatalog.css';
 
-const ProductCatalog = ({ products = [], onOrderProduct }) => {
+const ICONS = {
+  Package: <Package size={18} />,
+  Settings: <SettingsIcon size={18} />,
+  Droplet: <Droplet size={18} />,
+  Zap: <Zap size={18} />,
+  Box: <Box size={18} />,
+  Truck: <Truck size={18} />,
+  Tool: <PenTool size={18} />,
+  Layers: <Layers size={18} />,
+  Cpu: <Cpu size={18} />,
+  Wrench: <Wrench size={18} />
+};
+
+const ProductCatalog = ({ products = [], onOrderProduct, settings }) => {
   const { t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Get unique categories
-  const categories = ['ALL', ...new Set(products.map(p => p.category))];
+  const categoryNames = [...new Set(products.map(p => p.category))];
+  const settingsCategories = settings?.categories || [];
+  
+  const getCategoryIcon = (catName) => {
+    if (catName === 'ALL') return <Layers size={18} />;
+    const found = settingsCategories.find(c => c.name === catName);
+    return found && ICONS[found.icon] ? ICONS[found.icon] : <Package size={18} />;
+  };
+
+  const categories = ['ALL', ...categoryNames];
 
   // Filter products
   const filteredProducts = products.filter(p => {
@@ -57,7 +80,9 @@ const ProductCatalog = ({ products = [], onOrderProduct }) => {
               key={category}
               className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
               onClick={() => setActiveCategory(category)}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
             >
+              {getCategoryIcon(category)}
               {category === 'ALL' ? t('catalog_all') : category}
             </button>
           ))}

@@ -17,7 +17,8 @@ function App() {
   const [settings, setSettings] = useState({
     phone: '+998 90 123 45 67',
     email: 'info@globalprime.uz',
-    address: 'Toshkent shahar, Chilonzor tumani'
+    address: 'Toshkent shahar, Chilonzor tumani',
+    categories: []
   });
 
   useEffect(() => {
@@ -151,7 +152,7 @@ function App() {
               <Route path="/" element={
                 <>
                   <Hero slides={heroSlides} />
-                  <ProductCatalog products={products} onOrderProduct={handleOrderClick} />
+                  <ProductCatalog products={products} onOrderProduct={handleOrderClick} settings={settings} />
                 </>
               } />
               <Route path="/admin" element={

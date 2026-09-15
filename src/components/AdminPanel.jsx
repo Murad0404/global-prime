@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { Package, Settings as SettingsIcon, Droplet, Zap, Box, Truck, PenTool, Layers, Cpu, Wrench, X } from 'lucide-react';
 import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebase';
 import './AdminPanel.css';
+
+export const ICONS = {
+  Package: <Package size={18} />,
+  Settings: <SettingsIcon size={18} />,
+  Droplet: <Droplet size={18} />,
+  Zap: <Zap size={18} />,
+  Box: <Box size={18} />,
+  Truck: <Truck size={18} />,
+  Tool: <PenTool size={18} />,
+  Layers: <Layers size={18} />,
+  Cpu: <Cpu size={18} />,
+  Wrench: <Wrench size={18} />
+};
 
 const AdminPanel = ({
   products, onAddProduct, onDeleteProduct, onUpdateProduct,
@@ -28,9 +42,15 @@ const AdminPanel = ({
 
   // --- PRODUCT STATE ---
   const existingCategories = [...new Set(products.map(p => p.category))].filter(Boolean);
-  const [customCategories, setCustomCategories] = useState([]);
-  const allCategories = [...new Set([...existingCategories, ...customCategories])];
+  const categoriesFromSettings = settings?.categories || [];
+  const legacyCategories = existingCategories.filter(c => !categoriesFromSettings.find(sc => sc.name === c));
+  const allCategories = [
+    ...categoriesFromSettings,
+    ...legacyCategories.map(c => ({ name: c, icon: 'Package' }))
+  ];
+
   const [newCategory, setNewCategory] = useState('');
+  const [newCategoryIcon, setNewCategoryIcon] = useState('Package');
   const [editingProductId, setEditingProductId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -164,32 +184,39 @@ const AdminPanel = ({
   const handleDeleteCategory = (catName) => {
     const productsInCat = products.filter(p => p.category === catName);
     
+    const performDelete = () => {
+      const updatedCategories = categoriesFromSettings.filter(c => c.name !== catName);
+      onUpdateSettings({ ...settingsFormData, categories: updatedCategories });
+      showMessage("Kategoriya o'chirildi!");
+    };
+
     if (productsInCat.length > 0) {
       const confirmDelete = window.confirm(`Bu kategoriya ${productsInCat.length} ta mahsulotga ulangan. Aniq o'chirishni xohlaysizmi? (Unga tegishli mahsulotlar ham o'chiriladi)`);
       if (confirmDelete) {
         productsInCat.forEach(p => {
           onDeleteProduct(p.id);
         });
-        setCustomCategories(prev => prev.filter(c => c !== catName));
-        showMessage("Kategoriya va unga tegishli mahsulotlar o'chirildi!");
+        performDelete();
       }
     } else {
       const confirmDelete = window.confirm("Rostdan ham ushbu kategoriyani o'chirmoqchimisiz?");
       if (confirmDelete) {
-        setCustomCategories(prev => prev.filter(c => c !== catName));
-        showMessage("Kategoriya o'chirildi!");
+        performDelete();
       }
     }
   };
 
   const handleAddCategory = (e) => {
     e.preventDefault();
-    if (newCategory.trim() && !allCategories.includes(newCategory.trim())) {
-      setCustomCategories([...customCategories, newCategory.trim()]);
+    if (newCategory.trim() && !allCategories.find(c => c.name === newCategory.trim())) {
+      const updatedCategories = [...categoriesFromSettings, { name: newCategory.trim(), icon: newCategoryIcon }];
+      onUpdateSettings({ ...settingsFormData, categories: updatedCategories });
+      
       if (!productFormData.category) {
         setProductFormData({ ...productFormData, category: newCategory.trim() });
       }
       setNewCategory('');
+      setNewCategoryIcon('Package');
       showMessage('Kategoriya muvaffaqiyatli qo\'shildi!');
     }
   };
@@ -425,9 +452,18 @@ const AdminPanel = ({
               <h3>Yangi Kategoriya Qo'shish</h3>
               <form onSubmit={handleAddCategory} className="admin-form">
                 <div className="form-group">
-                  <label>Kategoriya nomi</label>
-                  <div className="input-group">
-                    <input type="text" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="Masalan: Maxsus uskunalar" />
+                  <label>Kategoriya nomi va Belgisi (Icon)</label>
+                  <div className="input-group" style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <input style={{ flex: '1', minWidth: '200px' }} type="text" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="Masalan: Maxsus uskunalar" />
+                    <select 
+                      value={newCategoryIcon} 
+                      onChange={(e) => setNewCategoryIcon(e.target.value)}
+                      style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+                    >
+                      {Object.keys(ICONS).map(iconKey => (
+                        <option key={iconKey} value={iconKey}>{iconKey}</option>
+                      ))}
+                    </select>
                     <button type="submit" className="btn-primary">Qo'shish</button>
                   </div>
                 </div>
@@ -437,10 +473,10 @@ const AdminPanel = ({
                 <div className="tags">
                   {allCategories.map((cat, idx) => (
                     <span key={idx} className="tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-                      {cat}
+                      {ICONS[cat.icon] || ICONS.Package} {cat.name}
                       <button 
                         type="button" 
-                        onClick={() => handleDeleteCategory(cat)}
+                        onClick={() => handleDeleteCategory(cat.name)}
                         style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: 'bold', padding: '0 5px', fontSize: '1.2rem', lineHeight: '1' }}
                         title="O'chirish"
                       >
@@ -483,7 +519,7 @@ const AdminPanel = ({
                     <select name="category" value={productFormData.category} onChange={handleProductChange} required>
                       <option value="">Tanlang...</option>
                       {allCategories.map(cat => (
-                        <option key={cat} value={cat}>{cat}</option>
+                        <option key={cat.name} value={cat.name}>{cat.name}</option>
                       ))}
                     </select>
                   </div>
