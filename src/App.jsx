@@ -27,6 +27,16 @@ function App() {
         const productsData = productsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setProducts(productsData);
 
+        // Check if URL contains productId to auto-open OrderModal
+        const params = new URLSearchParams(window.location.search);
+        const productIdParam = params.get('productId');
+        if (productIdParam) {
+          const productToOpen = productsData.find(p => p.id === productIdParam);
+          if (productToOpen) {
+            setSelectedProduct(productToOpen);
+          }
+        }
+
         // Fetch hero slides
         const slidesSnapshot = await getDocs(collection(db, "heroSlides"));
         const slidesData = slidesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));

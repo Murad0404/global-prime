@@ -27,11 +27,14 @@ const OrderModal = ({ product, onClose, settings }) => {
     const chatId = settings?.telegramChatId;
 
     if (token && chatId) {
+      const productLink = `https://${window.location.host}/?productId=${product.id}`;
+      
       const text = `
 🛒 <b>Yangi buyurtma!</b>
 
 📦 <b>Mahsulot:</b> ${product.name}
 💰 <b>Narxi:</b> $${product.price}
+🔗 <b>Mahsulot havolasi:</b> <a href="${productLink}">Saytda ko'rish</a>
 👤 <b>Mijoz:</b> ${formData.name}
 📞 <b>Telefon:</b> ${formData.phone}
 📝 <b>Xabar:</b> ${formData.message || "Yo'q"}
