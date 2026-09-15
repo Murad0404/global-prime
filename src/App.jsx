@@ -14,17 +14,37 @@ function App() {
   const [heroSlides, setHeroSlides] = useState([]);
 
   useEffect(() => {
-    // Fetch products from JSON Server
+    // Fetch products
     fetch(`/api/products`)
       .then(res => res.json())
-      .then(data => setProducts(data))
-      .catch(err => console.error("Products yuklashda xatolik:", err));
+      .then(data => {
+        if (Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          console.error("Products API error:", data);
+          setProducts([]);
+        }
+      })
+      .catch(err => {
+        console.error("Products yuklashda xatolik:", err);
+        setProducts([]);
+      });
 
-    // Fetch hero slides from JSON Server
+    // Fetch hero slides
     fetch(`/api/heroSlides`)
       .then(res => res.json())
-      .then(data => setHeroSlides(data))
-      .catch(err => console.error("Slides yuklashda xatolik:", err));
+      .then(data => {
+        if (Array.isArray(data)) {
+          setHeroSlides(data);
+        } else {
+          console.error("Slides API error:", data);
+          setHeroSlides([]);
+        }
+      })
+      .catch(err => {
+        console.error("Slides yuklashda xatolik:", err);
+        setHeroSlides([]);
+      });
   }, []);
 
   const handleOrderClick = (product) => {
