@@ -171,13 +171,13 @@ const AdminPanel = ({
           onDeleteProduct(p.id);
         });
         setCustomCategories(prev => prev.filter(c => c !== catName));
-        showMessage('Kategoriya va unga tegishli mahsulotlar o\\'chirildi!');
+        showMessage("Kategoriya va unga tegishli mahsulotlar o'chirildi!");
       }
     } else {
-      const confirmDelete = window.confirm('Rostdan ham ushbu kategoriyani o\\'chirmoqchimisiz?');
+      const confirmDelete = window.confirm("Rostdan ham ushbu kategoriyani o'chirmoqchimisiz?");
       if (confirmDelete) {
         setCustomCategories(prev => prev.filter(c => c !== catName));
-        showMessage('Kategoriya o\\'chirildi!');
+        showMessage("Kategoriya o'chirildi!");
       }
     }
   };
