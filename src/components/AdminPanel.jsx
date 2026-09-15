@@ -15,7 +15,9 @@ const AdminPanel = ({
   const [settingsFormData, setSettingsFormData] = useState({
     phone: settings?.phone || '+998 90 123 45 67',
     email: settings?.email || 'info@globalprime.uz',
-    address: settings?.address || 'Toshkent shahar, Chilonzor tumani'
+    address: settings?.address || 'Toshkent shahar, Chilonzor tumani',
+    telegramBotToken: settings?.telegramBotToken || '8876444321:AAH7etXOVPSqoq4jXleTy9LiZA-Ebi3klOk',
+    telegramChatId: settings?.telegramChatId || ''
   });
 
   useEffect(() => {
@@ -358,6 +360,31 @@ const AdminPanel = ({
                   onChange={handleSettingsChange} 
                   placeholder="Toshkent shahar, Chilonzor tumani..." 
                 />
+              </div>
+              <div className="form-group" style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #e5e7eb' }}>
+                <h4 style={{ marginBottom: '15px' }}>Telegram Bot Sozlamalari (Buyurtmalar uchun)</h4>
+                <label>Bot Token</label>
+                <input 
+                  type="text" 
+                  name="telegramBotToken" 
+                  value={settingsFormData.telegramBotToken} 
+                  onChange={handleSettingsChange} 
+                  placeholder="8876444321:AAH7etXOVPSqoq4jXleTy9LiZA-Ebi3klOk" 
+                />
+              </div>
+              <div className="form-group">
+                <label>Telegram Chat ID (Sizning ID raqamingiz) *</label>
+                <input 
+                  type="text" 
+                  name="telegramChatId" 
+                  value={settingsFormData.telegramChatId} 
+                  onChange={handleSettingsChange} 
+                  placeholder="Masalan: 123456789" 
+                  required
+                />
+                <small style={{ color: '#6b7280', display: 'block', marginTop: '5px' }}>
+                  O'zingizning Chat ID raqamingizni bilish uchun Telegramda <b>@userinfobot</b> ga kiring va Start bosing. U sizga ID raqamingizni beradi. O'sha raqamni shu yerga yozing.
+                </small>
               </div>
               <div className="form-actions" style={{ marginTop: '15px' }}>
                 <button type="submit" className="btn-primary" style={{ width: '200px' }}>

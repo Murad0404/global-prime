@@ -162,6 +162,7 @@ function App() {
           <OrderModal
             product={selectedProduct}
             onClose={handleCloseModal}
+            settings={settings}
           />
         )}
       </div>

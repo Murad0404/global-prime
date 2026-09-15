@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import './OrderModal.css';
 
-const OrderModal = ({ product, onClose }) => {
+const OrderModal = ({ product, onClose, settings }) => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [lightboxImage, setLightboxImage] = useState(null);
 
@@ -18,10 +19,41 @@ const OrderModal = ({ product, onClose }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate API call
-    console.log('Order submitted:', { product, ...formData });
+    setIsSending(true);
+
+    const token = settings?.telegramBotToken || '8876444321:AAH7etXOVPSqoq4jXleTy9LiZA-Ebi3klOk';
+    const chatId = settings?.telegramChatId;
+
+    if (token && chatId) {
+      const text = `
+🛒 <b>Yangi buyurtma!</b>
+
+📦 <b>Mahsulot:</b> ${product.name}
+💰 <b>Narxi:</b> $${product.price}
+👤 <b>Mijoz:</b> ${formData.name}
+📞 <b>Telefon:</b> ${formData.phone}
+📝 <b>Xabar:</b> ${formData.message || "Yo'q"}
+      `;
+      try {
+        await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: text,
+            parse_mode: 'HTML'
+          })
+        });
+      } catch (err) {
+        console.error('Telegram error:', err);
+      }
+    } else {
+      console.log('Order submitted locally (Telegram not configured):', { product, ...formData });
+    }
+
+    setIsSending(false);
     setSubmitted(true);
     setTimeout(() => {
       onClose();
@@ -128,8 +160,8 @@ const OrderModal = ({ product, onClose }) => {
                 ></textarea>
               </div>
               
-              <button type="submit" className="btn btn-primary w-100 submit-btn">
-                So'rov yuborish
+              <button type="submit" className="btn btn-primary w-100 submit-btn" disabled={isSending}>
+                {isSending ? "Yuborilmoqda..." : "So'rov yuborish"}
               </button>
             </form>
           </>
