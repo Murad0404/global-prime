@@ -100,7 +100,7 @@ const OrderModal = ({ product, onClose, settings }) => {
                     <img 
                       src={images[currentImageIndex]} 
                       alt={product.name} 
-                      style={{ width: '100%', height: '300px', objectFit: 'contain', borderRadius: '8px', backgroundColor: '#f3f4f6' }} 
+                      className="modal-main-image"
                     />
                     <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(0,0,0,0.6)', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '12px' }}>
                       {t('modal_zoom')}
@@ -115,11 +115,7 @@ const OrderModal = ({ product, onClose, settings }) => {
                           src={img} 
                           alt={`Thumbnail ${idx + 1}`} 
                           onClick={() => setCurrentImageIndex(idx)}
-                          style={{ 
-                            width: '80px', height: '80px', objectFit: 'cover', borderRadius: '6px', cursor: 'pointer',
-                            border: currentImageIndex === idx ? '2px solid var(--primary-color)' : '2px solid transparent',
-                            opacity: currentImageIndex === idx ? 1 : 0.6
-                          }} 
+                          className={`modal-thumbnail ${currentImageIndex === idx ? 'active' : ''}`}
                         />
                       ))}
                     </div>
