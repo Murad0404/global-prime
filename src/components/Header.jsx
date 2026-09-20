@@ -32,7 +32,7 @@ const Header = ({ settings }) => {
           </nav>
         )}
 
-        <div className="contact-info desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+        <div className="contact-info desktop-only" style={{ gap: '15px' }}>
           <select 
             value={language} 
             onChange={(e) => changeLanguage(e.target.value)}

@@ -1,0 +1,182 @@
+[
+  {
+    "name": "Gorizontal suyuqlik quyish uskunasi (1 soploli)",
+    "russianName": "Горизонтальный жидкостный дозатор, одно сопло",
+    "price": "0",
+    "category": "Dozatorlar",
+    "description": "Suyuqliklar uchun gorizontal dozator. 1 ta soploli.",
+    "features": ["Suyuqliklar uchun", "1 ta soploli", "Pnevmatik va elektr"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783721.pdf_page1_img1.jpeg"
+  },
+  {
+    "name": "Gorizontal suyuqlik quyish uskunasi (2 soploli)",
+    "russianName": "Горизонтальный жидкостный дозатор, два сопла",
+    "price": "0",
+    "category": "Dozatorlar",
+    "description": "Suyuqliklar uchun gorizontal dozator. 2 ta soploli.",
+    "features": ["Suyuqliklar uchun", "2 ta soploli", "Yuqori tezlik"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783721.pdf_page1_img2.jpeg"
+  },
+  {
+    "name": "Gorizontal pasta quyish uskunasi (1 soploli)",
+    "russianName": "Горизонтальный дозатор для пасты, одно сопло",
+    "price": "0",
+    "category": "Dozatorlar",
+    "description": "Quyuq massalar va pastalar uchun gorizontal dozator. 1 ta soploli.",
+    "features": ["Pasta va quyuq massalar", "1 ta soploli"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783721.pdf_page2_img1.jpeg"
+  },
+  {
+    "name": "Gorizontal pasta quyish uskunasi (2 soploli)",
+    "russianName": "Горизонтальный дозатор для пасты, два сопла",
+    "price": "0",
+    "category": "Dozatorlar",
+    "description": "Quyuq massalar va pastalar uchun gorizontal dozator. 2 ta soploli.",
+    "features": ["Pasta va quyuq massalar", "2 ta soploli"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783721.pdf_page2_img2.jpeg"
+  },
+  {
+    "name": "Vertikal suyuqlik quyish uskunasi (1 soploli)",
+    "russianName": "Вертикальный жидкостный дозатор, одно сопло",
+    "price": "0",
+    "category": "Dozatorlar",
+    "description": "Suyuqliklar uchun vertikal dozator. 1 ta soploli.",
+    "features": ["Vertikal turdagi", "1 ta soploli", "Suyuqliklar uchun"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783721.pdf_page3_img2.jpeg"
+  },
+  {
+    "name": "Yarim avtomat ko'tariluvchi polkali dozator",
+    "russianName": "Полуавтоматический дозатор с подъёмной полкой",
+    "price": "610",
+    "category": "Dozatorlar",
+    "description": "Ko'tarilib tushuvchi polkali yarim avtomat dozator.",
+    "features": ["Ko'tariluvchi polka", "Yarim avtomat"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783721.pdf_page4_img2.jpeg"
+  },
+  {
+    "name": "Qo'l rejimida ishlovchi qopqoq yopish uskunasi",
+    "russianName": "Ручной укупорочный станок",
+    "price": "0",
+    "category": "Qopqoq yopish uskunalari",
+    "description": "Qo'lda boshqariladigan ixcham qopqoq yopish uskunasi. S: 45mm, M: 65mm.",
+    "features": ["Qo'lda boshqarish", "Rezina kallak 10-50mm"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783694.pdf_page1_img1.jpeg"
+  },
+  {
+    "name": "Stol usti qopqoq yopish uskunasi DHZ-450A",
+    "russianName": "DHZ-450A Настольный станок для укупорки",
+    "price": "0",
+    "category": "Qopqoq yopish uskunalari",
+    "description": "Plastik qopqoqlar uchun stol usti yarim avtomat qopqoq yopish uskunasi.",
+    "features": ["Kuchlanish: 110/220V, 50W", "Qopqoq o'lchami: 15-50mm", "Butilka balandligi: 80-200mm"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783694.pdf_page1_img4.jpeg"
+  },
+  {
+    "name": "Vakuumli qopqoq yopish uskunasi GJV-20",
+    "russianName": "GJV-20 Вакуумный укупорочный станок",
+    "price": "0",
+    "category": "Qopqoq yopish uskunalari",
+    "description": "Shisha bankalar uchun vakuumli qopqoq yopish uskunasi (2 ta butilka uchun).",
+    "features": ["Quvvat: 550W", "Qopqoq diametri: 40-80mm", "Kompressor: ≥1.5kVt"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783694.pdf_page3_img3.jpeg"
+  },
+  {
+    "name": "Avtomatik qopqoq yopish uskunasi",
+    "russianName": "Автоматический укупорочный станок",
+    "price": "0",
+    "category": "Qopqoq yopish uskunalari",
+    "description": "Qopqoq uzatuvchi, vibrostol va yo'naltiruvchisi bilan to'liq avtomatik qopqoq yopish tizimi.",
+    "features": ["To'liq avtomatik", "Tezlik: 20-28 dona/min", "Qopqoq diametri: 60-80mm"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783694.pdf_page4_img2.jpeg"
+  },
+  {
+    "name": "Qo'l rejimida ishlovchi etiketkalash uskunasi MT-30",
+    "russianName": "MT-30 Ручной этикетировщик",
+    "price": "0",
+    "category": "Etiketkalash uskunalari",
+    "description": "Yumaloq idishlar uchun qo'lda ishlovchi etiketkalash uskunasi.",
+    "features": ["Qo'lda boshqarish", "Yumaloq butilkalar uchun"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783773.pdf_page1_img2.jpeg"
+  },
+  {
+    "name": "Yarim avtomat etiketkalash uskunasi MT-50",
+    "russianName": "MT-50 Этикетировщик для круглых бутылок",
+    "price": "0",
+    "category": "Etiketkalash uskunalari",
+    "description": "Yumaloq butilkalar uchun alyuminiy korpusli yarim avtomatik etiketkalash uskunasi.",
+    "features": ["Yarim avtomat", "Alyuminiy korpus", "Yumaloq butilkalar uchun"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783773.pdf_page1_img3.jpeg"
+  },
+  {
+    "name": "Sana bosuvchi etiketkalash uskunasi MT-50C",
+    "russianName": "MT-50C Этикетировщик с датированием",
+    "price": "0",
+    "category": "Etiketkalash uskunalari",
+    "description": "Yumaloq idishlarga etiketka yopishtirish va bir vaqtda sana bosish funksiyasi.",
+    "features": ["Sana bosish funksiyasi", "Yumaloq idishlar uchun"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783773.pdf_page2_img2.jpeg"
+  },
+  {
+    "name": "Avtomatik etiketkalash uskunasi ARLM-200A",
+    "russianName": "ARLM-200A Автоматический этикетировщик",
+    "price": "0",
+    "category": "Etiketkalash uskunalari",
+    "description": "Yumaloq butilkalar uchun chiziqli (lineyniy) avtomatik etiketkalash uskunasi.",
+    "features": ["To'liq avtomatik", "Chiziqli tip", "Yuqori tezlik"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789539783773.pdf_page6_img2.jpeg"
+  },
+  {
+    "name": "Kukun qadoqlash uskunasi (Stol usti)",
+    "russianName": "Настольная машина для фасовки порошков",
+    "price": "0",
+    "category": "Kukun qadoqlash uskunalari",
+    "description": "Kukunlar va kukunsimon mahsulotlarni qadoqlash uchun stol usti uskunasi.",
+    "features": ["Kukunlar uchun", "Stol usti", "Ixcham o'lcham"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789540425420.pdf_page1_img1.jpeg"
+  },
+  {
+    "name": "Yarim avtomat kukun dozatori HZF-A",
+    "russianName": "Полуавтоматический дозатор порошков HZF-A",
+    "price": "0",
+    "category": "Kukun qadoqlash uskunalari",
+    "description": "Kukunlarni yarim avtomatik dozalash qurilmasi (tarozisiz model).",
+    "features": ["Yarim avtomat", "Tarozisiz model"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789540425420.pdf_page2_img2.jpeg"
+  },
+  {
+    "name": "Avtomatik kukun dozatori HZF-C",
+    "russianName": "Автоматический дозатор порошков HZF-C",
+    "price": "0",
+    "category": "Kukun qadoqlash uskunalari",
+    "description": "Konveyerli avtomatik kukun dozatori. Yuqori aniqlik va tezlik.",
+    "features": ["Avtomatik konveyer", "Yuqori aniqlik", "Tomchilashga qarshi tizim (ixtiyoriy)"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789540425420.pdf_page3_img1.jpeg"
+  },
+  {
+    "name": "Dozalash va qadoqlash uskunasi HZGF-100",
+    "russianName": "Фасовочно-дозировочный аппарат HZGF-100",
+    "price": "0",
+    "category": "Kukun qadoqlash uskunalari",
+    "description": "Granulali va kukunli mahsulotlar uchun dozalash va qadoqlash uskunasi.",
+    "features": ["Dozalash 1-100g", "Tezlik: 6-15 qadoq/min", "Aniqlik: ±0.2g"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789540425446.pdf_page1_img1.jpeg"
+  },
+  {
+    "name": "Pedalli zapayshik PSF-350",
+    "russianName": "Алюминиевый педальный запайщик PSF-350",
+    "price": "0",
+    "category": "Zapayshiklar",
+    "description": "Alyuminiy korpusli pedalli qadoq yopuvchi uskuna (запайщик).",
+    "features": ["Payvand choki: 350mm", "Pedalli boshqaruv", "Sanoat uchun mo'ljallangan"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789540425413.pdf_page1_img1.jpeg"
+  },
+  {
+    "name": "Qo'l induksion zapayshik DCGY-F200",
+    "russianName": "Ручной индукционный запайщик DCGY-F200",
+    "price": "0",
+    "category": "Zapayshiklar",
+    "description": "Plastik butilkalar og'zini folga bilan yopish uchun qo'lda ishlovchi induksion uskuna.",
+    "features": ["Quvvat: ≥1200Вт", "Payvand diametri: 20-80mm"],
+    "localImage": "/Users/admin/.gemini/antigravity-ide/brain/1481d66a-c834-453b-a4f9-e8695d746c6e/scratch/extracted_images/media_1789540425413.pdf_page1_img2.jpeg"
+  }
+]
