@@ -455,15 +455,29 @@ const AdminPanel = ({
                   <label>Kategoriya nomi va Belgisi (Icon)</label>
                   <div className="input-group" style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
                     <input style={{ flex: '1', minWidth: '200px' }} type="text" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="Masalan: Maxsus uskunalar" />
-                    <select 
-                      value={newCategoryIcon} 
-                      onChange={(e) => setNewCategoryIcon(e.target.value)}
-                      style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-                    >
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
                       {Object.keys(ICONS).map(iconKey => (
-                        <option key={iconKey} value={iconKey}>{iconKey}</option>
+                        <div 
+                          key={iconKey}
+                          onClick={() => setNewCategoryIcon(iconKey)}
+                          title={iconKey}
+                          style={{
+                            padding: '8px',
+                            border: newCategoryIcon === iconKey ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            backgroundColor: newCategoryIcon === iconKey ? 'var(--color-primary-light, #eff6ff)' : 'transparent',
+                            color: newCategoryIcon === iconKey ? 'var(--color-primary)' : 'var(--color-text-light)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'all 0.2s'
+                          }}
+                        >
+                          {ICONS[iconKey]}
+                        </div>
                       ))}
-                    </select>
+                    </div>
                     <button type="submit" className="btn-primary">Qo'shish</button>
                   </div>
                 </div>
