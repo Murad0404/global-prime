@@ -10,6 +10,7 @@ const OrderModal = ({ product, onClose, settings }) => {
     phone: '',
     message: ''
   });
+  const [countryCode, setCountryCode] = useState('+998');
   const [submitted, setSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -23,6 +24,12 @@ const OrderModal = ({ product, onClose, settings }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!formData.phone || formData.phone.trim().length < 7) {
+      alert(t('form_phone_error') || "Iltimos, yaroqli telefon raqamini kiriting");
+      return;
+    }
+
     setIsSending(true);
 
     const token = settings?.telegramBotToken || '8876444321:AAH7etXOVPSqoq4jXleTy9LiZA-Ebi3klOk';
@@ -38,7 +45,7 @@ const OrderModal = ({ product, onClose, settings }) => {
 💰 <b>Narxi:</b> $${product.price}
 🔗 <b>Mahsulot havolasi:</b> <a href="${productLink}">Saytda ko'rish</a>
 👤 <b>Mijoz:</b> ${formData.name}
-📞 <b>Telefon:</b> ${formData.phone}
+📞 <b>Telefon:</b> ${countryCode} ${formData.phone}
 📝 <b>Xabar:</b> ${formData.message || "Yo'q"}
       `;
       try {
@@ -140,15 +147,39 @@ const OrderModal = ({ product, onClose, settings }) => {
               
               <div className="form-group">
                 <label htmlFor="phone">{t('form_phone_label')}</label>
-                <input 
-                  type="tel" 
-                  id="phone" 
-                  name="phone" 
-                  required 
-                  placeholder={t('form_phone_placeholder')}
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <select 
+                    value={countryCode} 
+                    onChange={(e) => setCountryCode(e.target.value)}
+                    style={{ 
+                      padding: '10px', 
+                      borderRadius: '8px', 
+                      border: '1px solid #ddd',
+                      backgroundColor: '#f8f9fa',
+                      fontSize: '15px',
+                      cursor: 'pointer',
+                      outline: 'none',
+                      color: '#333'
+                    }}
+                  >
+                    <option value="+998">🇺🇿 +998</option>
+                    <option value="+7">🇷🇺/🇰🇿 +7</option>
+                    <option value="+996">🇰🇬 +996</option>
+                    <option value="+992">🇹🇯 +992</option>
+                    <option value="+993">🇹🇲 +993</option>
+                  </select>
+                  <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    required 
+                    minLength="7"
+                    placeholder={t('form_phone_placeholder')}
+                    value={formData.phone}
+                    onChange={handleChange}
+                    style={{ flex: 1 }}
+                  />
+                </div>
               </div>
               
               <div className="form-group">
