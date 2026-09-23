@@ -3,7 +3,7 @@ import { Package, Settings, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 import './ProductCard.css';
 
-const ProductCard = ({ product, onOrder }) => {
+const ProductCard = ({ product, categoryName, onOrder }) => {
   const { language, t } = useLanguage();
   const oldP = parseFloat(product.oldPrice);
   const newP = parseFloat(product.price);
@@ -31,7 +31,7 @@ const ProductCard = ({ product, onOrder }) => {
         ) : (
           <div className="product-image-placeholder">
             <Package size={48} className="placeholder-icon" />
-            <span className="placeholder-text">{product.category}</span>
+            <span className="placeholder-text">{categoryName || product.category}</span>
           </div>
         )}
         <div className="product-price-container">

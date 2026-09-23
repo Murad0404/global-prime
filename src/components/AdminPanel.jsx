@@ -49,7 +49,9 @@ const AdminPanel = ({
     ...legacyCategories.map(c => ({ name: c, icon: 'Package' }))
   ];
 
-  const [newCategory, setNewCategory] = useState('');
+  const [newCategoryUz, setNewCategoryUz] = useState('');
+  const [newCategoryRu, setNewCategoryRu] = useState('');
+  const [newCategoryEn, setNewCategoryEn] = useState('');
   const [newCategoryIcon, setNewCategoryIcon] = useState('Package');
   const [editingProductId, setEditingProductId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -208,14 +210,24 @@ const AdminPanel = ({
 
   const handleAddCategory = (e) => {
     e.preventDefault();
-    if (newCategory.trim() && !allCategories.find(c => c.name === newCategory.trim())) {
-      const updatedCategories = [...categoriesFromSettings, { name: newCategory.trim(), icon: newCategoryIcon }];
+    const uz = newCategoryUz.trim();
+    if (uz && !allCategories.find(c => c.name === uz)) {
+      const newCatObj = { 
+        name: uz, 
+        nameUz: uz, 
+        nameRu: newCategoryRu.trim() || uz, 
+        nameEn: newCategoryEn.trim() || uz, 
+        icon: newCategoryIcon 
+      };
+      const updatedCategories = [...categoriesFromSettings, newCatObj];
       onUpdateSettings({ ...settingsFormData, categories: updatedCategories });
       
       if (!productFormData.category) {
-        setProductFormData({ ...productFormData, category: newCategory.trim() });
+        setProductFormData({ ...productFormData, category: uz });
       }
-      setNewCategory('');
+      setNewCategoryUz('');
+      setNewCategoryRu('');
+      setNewCategoryEn('');
       setNewCategoryIcon('Package');
       showMessage('Kategoriya muvaffaqiyatli qo\'shildi!');
     }
@@ -452,9 +464,11 @@ const AdminPanel = ({
               <h3>Yangi Kategoriya Qo'shish</h3>
               <form onSubmit={handleAddCategory} className="admin-form">
                 <div className="form-group">
-                  <label>Kategoriya nomi va Belgisi (Icon)</label>
+                  <label>Kategoriya nomi (O'zbek, Rus, Ingliz) va Belgisi</label>
                   <div className="input-group" style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
-                    <input style={{ flex: '1', minWidth: '200px' }} type="text" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="Masalan: Maxsus uskunalar" />
+                    <input style={{ flex: '1', minWidth: '150px' }} type="text" value={newCategoryUz} onChange={(e) => setNewCategoryUz(e.target.value)} placeholder="O'zbekcha (Maxsus uskunalar)" required />
+                    <input style={{ flex: '1', minWidth: '150px' }} type="text" value={newCategoryRu} onChange={(e) => setNewCategoryRu(e.target.value)} placeholder="Ruscha" />
+                    <input style={{ flex: '1', minWidth: '150px' }} type="text" value={newCategoryEn} onChange={(e) => setNewCategoryEn(e.target.value)} placeholder="Inglizcha" />
                     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
                       {Object.keys(ICONS).map(iconKey => (
                         <div 
@@ -487,7 +501,7 @@ const AdminPanel = ({
                 <div className="tags">
                   {allCategories.map((cat, idx) => (
                     <span key={idx} className="tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-                      {ICONS[cat.icon] || ICONS.Package} {cat.name}
+                      {ICONS[cat.icon] || ICONS.Package} {cat.nameUz || cat.name}
                       <button 
                         type="button" 
                         onClick={() => handleDeleteCategory(cat.name)}
@@ -533,7 +547,7 @@ const AdminPanel = ({
                     <select name="category" value={productFormData.category} onChange={handleProductChange} required>
                       <option value="">Tanlang...</option>
                       {allCategories.map(cat => (
-                        <option key={cat.name} value={cat.name}>{cat.name}</option>
+                        <option key={cat.name} value={cat.name}>{cat.nameUz || cat.name}</option>
                       ))}
                     </select>
                   </div>

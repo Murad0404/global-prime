@@ -18,7 +18,7 @@ const ICONS = {
 };
 
 const ProductCatalog = ({ products = [], onOrderProduct, settings }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -30,6 +30,18 @@ const ProductCatalog = ({ products = [], onOrderProduct, settings }) => {
     if (catName === 'ALL') return <Layers size={18} />;
     const found = settingsCategories.find(c => c.name === catName);
     return found && ICONS[found.icon] ? ICONS[found.icon] : <Package size={18} />;
+  };
+
+  const getCategoryName = (catName) => {
+    if (catName === 'ALL') return t('catalog_all');
+    const found = settingsCategories.find(c => c.name === catName);
+    if (found) {
+      if (language === 'ru' && found.nameRu) return found.nameRu;
+      if (language === 'en' && found.nameEn) return found.nameEn;
+      if (language === 'uz' && found.nameUz) return found.nameUz;
+      return found.nameUz || found.name;
+    }
+    return catName;
   };
 
   const categories = ['ALL', ...categoryNames];
@@ -83,7 +95,7 @@ const ProductCatalog = ({ products = [], onOrderProduct, settings }) => {
               style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
             >
               {getCategoryIcon(category)}
-              {category === 'ALL' ? t('catalog_all') : category}
+              {getCategoryName(category)}
             </button>
           ))}
         </div>
@@ -97,6 +109,7 @@ const ProductCatalog = ({ products = [], onOrderProduct, settings }) => {
             >
               <ProductCard
                 product={product}
+                categoryName={getCategoryName(product.category)}
                 onOrder={onOrderProduct}
               />
             </div>
