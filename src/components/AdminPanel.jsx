@@ -191,7 +191,7 @@ const AdminPanel = ({
 
   const handleSettingsSubmit = (e) => {
     e.preventDefault();
-    onUpdateSettings(settingsFormData);
+    onUpdateSettings({ ...settings, ...settingsFormData });
     showMessage("Sozlamalar muvaffaqiyatli saqlandi!");
   };
 
@@ -201,7 +201,7 @@ const AdminPanel = ({
     
     const performDelete = () => {
       const updatedCategories = categoriesFromSettings.filter(c => c.name !== catName);
-      onUpdateSettings({ ...settingsFormData, categories: updatedCategories });
+      onUpdateSettings({ ...settings, ...settingsFormData, categories: updatedCategories });
       showMessage("Kategoriya o'chirildi!");
     };
 
@@ -233,7 +233,7 @@ const AdminPanel = ({
         icon: newCategoryIcon 
       };
       const updatedCategories = [...categoriesFromSettings, newCatObj];
-      onUpdateSettings({ ...settingsFormData, categories: updatedCategories });
+      onUpdateSettings({ ...settings, ...settingsFormData, categories: updatedCategories });
       
       if (!productFormData.category) {
         setProductFormData({ ...productFormData, category: uz });
