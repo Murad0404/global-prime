@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Package, Settings as SettingsIcon, Droplet, Zap, Box, Truck, PenTool, Layers, Cpu, Wrench, X } from 'lucide-react';
 import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebase';
+import { useLanguage } from '../LanguageContext';
 import './AdminPanel.css';
 
 export const ICONS = {
@@ -22,6 +23,7 @@ const AdminPanel = ({
   heroSlides, onAddHeroSlide, onDeleteHeroSlide, onUpdateHeroSlide,
   settings, onUpdateSettings
 }) => {
+  const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState('products'); // 'products', 'hero', 'settings'
   const [message, setMessage] = useState('');
 
@@ -48,6 +50,17 @@ const AdminPanel = ({
     ...categoriesFromSettings,
     ...legacyCategories.map(c => ({ name: c, icon: 'Package' }))
   ];
+
+  const getCategoryName = (catName) => {
+    const found = allCategories.find(c => c.name === catName);
+    if (found) {
+      if (language === 'ru' && found.nameRu) return found.nameRu;
+      if (language === 'en' && found.nameEn) return found.nameEn;
+      if (language === 'uz' && found.nameUz) return found.nameUz;
+      return found.nameUz || found.name;
+    }
+    return catName;
+  };
 
   const [newCategoryUz, setNewCategoryUz] = useState('');
   const [newCategoryRu, setNewCategoryRu] = useState('');
@@ -501,7 +514,7 @@ const AdminPanel = ({
                 <div className="tags">
                   {allCategories.map((cat, idx) => (
                     <span key={idx} className="tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-                      {ICONS[cat.icon] || ICONS.Package} {cat.nameUz || cat.name}
+                      {ICONS[cat.icon] || ICONS.Package} {getCategoryName(cat.name)}
                       <button 
                         type="button" 
                         onClick={() => handleDeleteCategory(cat.name)}
@@ -547,7 +560,7 @@ const AdminPanel = ({
                     <select name="category" value={productFormData.category} onChange={handleProductChange} required>
                       <option value="">Tanlang...</option>
                       {allCategories.map(cat => (
-                        <option key={cat.name} value={cat.name}>{cat.nameUz || cat.name}</option>
+                        <option key={cat.name} value={cat.name}>{getCategoryName(cat.name)}</option>
                       ))}
                     </select>
                   </div>
@@ -642,9 +655,9 @@ const AdminPanel = ({
                             <div className="table-img-placeholder">Rasmsiz</div>
                           )}
                         </td>
-                        <td>{product.name}</td>
+                        <td>{language === 'ru' && product.russianName ? product.russianName : product.name}</td>
                         <td>${product.price}</td>
-                        <td>{product.category}</td>
+                        <td>{getCategoryName(product.category)}</td>
                         <td>
                           <div className="action-buttons">
                             <button className="btn-edit" onClick={() => handleEditProduct(product)}>Tahrirlash</button>
